@@ -24,11 +24,12 @@ public class Recursion{
 	return betterGuess(n, 1);
     }
     public static void main (String[]args){
-	System.out.println(name());
+	    //the following are test cases
+	/**System.out.println(name());
 	System.out.println(isCloseEnough(.10000000000, .10000000010));
 	System.out.println(sqrt(100));
 	System.out.println(sqrt(-4));
-	System.out.println(sqrt(4));
+	System.out.println(sqrt(4));*/
     }
 
 }

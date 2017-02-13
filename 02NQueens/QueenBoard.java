@@ -1,6 +1,6 @@
 public class QueenBoard{
     private int[][]board;
-    private int solutionCount;
+    private int solutionCount = -1;
     private int pr;
     //private int size;
 
@@ -135,35 +135,73 @@ public class QueenBoard{
 	return -1;
     }
 
-    public boolean solveOne(int col, int pvrw){
-	if (col == board.length){
-	    for (int i = 0; i < board.length; i++){
+    public boolean solveOne(int col){
+	if (col >= board.length){
+	    /**for (int i = 0; i < board.length; i++){
 		if (board[col - 1][i] == -1){
 		    return true;
 		}
 		if (i == board.length - 1){
 		    return false;
 		}
-	    }
+		}*/
+	    return true;
 	}
 	//int pr;
 	/**if (col == 0){
+	   pr = 0;
+	   }
+	   else{
+	   pr = prevRow(col - 1);
+	   }*/
+	if (col == 0){
 	    pr = 0;
 	}
 	else{
 	    pr = prevRow(col - 1);
-	    }*/
-	for (int r = pvrw; r < board.length; r++){
+	}
+	for (int r = 0; r < board.length; r++){
 	    if (board[col][r] == 0){
 		addQueen(col, r);
-		return solveOne(col + 1, 0);
+		System.out.println(this.toString());
+		//return solveOne(col + 1, 0);
+		if (solveOne(col + 1)){
+		    return true;
+		}
+	    
+		else {
+		    /**if (col == 0){
+		       pr = 0;
+		       }
+		       else{
+		       pr = prevRow(col - 1);
+		       }*/
+		    removeQueen(col - 1, pr);
+		    //if (col == 0){
+		    //solveOne(col);
+		    addQueen(col, pr);
+		    solveOne(col + 1);
+		    //}
+		    //	else{
+		    //    solveOne(col + 1);
+		    //}
+		
+		}
 	    }
+	    //else if (r == board.length - 1){
+	    //removeQueen(col
+	   
+	}
+	return false;
+    }
+
+    /**}
 	    else if (r == board.length - 1 && board[col][r] != 0){
 		if (col == 0){
 		    pvrw = prevRow(0);
 		    removeQueen(0, pvrw);  
 		    return solveOne(0, pvrw + 1);
-		    }
+		}
 		else{
 		    pvrw = prevRow(col - 1);
 		    removeQueen(col - 1, pvrw);
@@ -180,7 +218,9 @@ public class QueenBoard{
 	    }
 	}
 	return false;
-    }
+	}*/
+    //private boolean solveCount(int col, int prevRow){
+
  
     public String toString(){
 	String sum = "";
@@ -200,26 +240,26 @@ public class QueenBoard{
     
     public static void main (String[]args){
 	/**	QueenBoard Q = new QueenBoard(8);
-	System.out.println(Q.addQueen(2,0));
-	System.out.println(Q.toString());
-	System.out.println(Q.addQueen(5,7));
-	//System.out.println(Q.addQueen(0,2));
-	System.out.println(Q.toString());
-	System.out.println(Q.prevRow(0));
-	System.out.println(Q.prevRow(2));
-       	System.out.println(Q.removeQueen(2,0));
-       	System.out.println(Q.toString());
-	System.out.println(Q.removeQueen(5,1));
-	System.out.println(Q.toString());
-	System.out.println(Q.solveOne(8));
-	System.out.println(Q.solveOne(5));
-	Q.addQueen(7,2);
-	System.out.println(Q.solveOne(8));*/
-	QueenBoard B = new QueenBoard(9);
+		System.out.println(Q.addQueen(2,0));
+		System.out.println(Q.toString());
+		System.out.println(Q.addQueen(5,7));
+		//System.out.println(Q.addQueen(0,2));
+		System.out.println(Q.toString());
+		System.out.println(Q.prevRow(0));
+		System.out.println(Q.prevRow(2));
+		System.out.println(Q.removeQueen(2,0));
+		System.out.println(Q.toString());
+		System.out.println(Q.removeQueen(5,1));
+		System.out.println(Q.toString());
+		System.out.println(Q.solveOne(8));
+		System.out.println(Q.solveOne(5));
+		Q.addQueen(7,2);
+		System.out.println(Q.solveOne(8));*/
+	QueenBoard B = new QueenBoard(4);
 	
-	System.out.println(B.solveOne(0, 3));
+	System.out.println(B.solveOne(0));
 	System.out.println(B.toString());
     }
 }
 
-	//idea to find prevRow: set it equal 
+//idea to find prevRow: set it equal 

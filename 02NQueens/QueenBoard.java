@@ -1,12 +1,9 @@
+//I was unable to finish the recursive part of the helper function for solutionCount(). I will finish it tomorrow.
 public class QueenBoard{
     private int[][]board;
     private int solutionCount = -1;
-    private int pr;
-    //private int size;
-
-    //THERE SHOULD BE AN EXCEPTION SOMEWHERE TO MAKESURE SIZE ISNT NEGATIVE!!!
-
-    
+    private int pr = 0;
+ 
     public QueenBoard(int size){
 	//size = sizeOfBoard;
 	board = new int[size][size];
@@ -135,93 +132,153 @@ public class QueenBoard{
 	return -1;
     }
 
-    public boolean solveOne(int col){
-	if (col >= board.length){
-	    /**for (int i = 0; i < board.length; i++){
-		if (board[col - 1][i] == -1){
-		    return true;
-		}
-		if (i == board.length - 1){
-		    return false;
-		}
-		}*/
+    private boolean solveO(int col, int pvrw){
+	if (board.length == 2 || board.length == 3){
+	    return false;
+	}
+	if (col == board.length){
 	    return true;
 	}
-	//int pr;
-	/**if (col == 0){
-	   pr = 0;
-	   }
-	   else{
-	   pr = prevRow(col - 1);
-	   }*/
-	if (col == 0){
-	    pr = 0;
-	}
-	else{
-	    pr = prevRow(col - 1);
-	}
-	for (int r = 0; r < board.length; r++){
+	for (int r = pvrw; r < board.length; r++){
 	    if (board[col][r] == 0){
 		addQueen(col, r);
-		System.out.println(this.toString());
-		//return solveOne(col + 1, 0);
-		if (solveOne(col + 1)){
+		if (solveO(col + 1, 0)){
 		    return true;
+		}	
+	    }	    
+	    else if (r == board.length - 1){
+		pvrw = prevRow(col - 1);
+		removeQueen(col - 1, pvrw);
+		if (pvrw + 1 == board.length){
+		    pvrw = prevRow(col - 2);
+		    removeQueen(col - 2, pvrw);
+		    return solveO(col - 2, pvrw + 1);
 		}
-	    
-		else {
-		    /**if (col == 0){
-		       pr = 0;
-		       }
-		       else{
-		       pr = prevRow(col - 1);
-		       }*/
-		    removeQueen(col - 1, pr);
-		    //if (col == 0){
-		    //solveOne(col);
-		    addQueen(col, pr);
-		    solveOne(col + 1);
-		    //}
-		    //	else{
-		    //    solveOne(col + 1);
-		    //}
-		
+		else{
+		    return solveO(col - 1, pvrw + 1);
 		}
 	    }
-	    //else if (r == board.length - 1){
-	    //removeQueen(col
-	   
 	}
 	return false;
     }
 
-    /**}
-	    else if (r == board.length - 1 && board[col][r] != 0){
-		if (col == 0){
-		    pvrw = prevRow(0);
-		    removeQueen(0, pvrw);  
-		    return solveOne(0, pvrw + 1);
+    private int solveC(int col, int pvrw){
+	if (board.length == 2 || board.length == 3){
+	    return solutionCount;
+	}
+	solveO(col, pvrw);
+	pvrw = prevRow(board.length - 1);
+	removeQueen(board.length - 1, pvrw);
+	pvrw = prevRow(board.length - 2);
+	removeQueen(board.length - 2, pvrw);
+	solveC(board.length - 2, pvrw + 1);
+	/**if (solveO (board.length - 2, pvrw)){
+	    solutionCount++;
+	    return solveO(board.length - 1, pvrw);*/
+	//}
+	//	else{
+	    return solutionCount;
+	    //}
+    }
+     private boolean solveD(int col, int pvrw){
+	if (board.length == 2 || board.length == 3){
+	    return false;
+	}
+	if (col == board.length){
+	    solutionCount++;
+	    return true;
+	}
+	for (int r = pvrw; r < board.length; r++){
+	    if (board[col][r] == 0){
+		addQueen(col, r);
+		if (solveD(col + 1, 0)){
+		    return true;
+		}	
+	    }	    
+	    else if (r == board.length - 1){
+		pvrw = prevRow(col - 1);
+		removeQueen(col - 1, pvrw);
+		if (pvrw + 1 == board.length){
+		    pvrw = prevRow(col - 2);
+		    removeQueen(col - 2, pvrw);
+		    return solveD(col - 2, pvrw + 1);
 		}
 		else{
-		    pvrw = prevRow(col - 1);
-		    removeQueen(col - 1, pvrw);
-		    //pr++; 
-		    if (pvrw + 1 >= board.length){
-			pvrw = prevRow(col - 2);
-			removeQueen(col - 2, pvrw);
-			return solveOne(col - 2, pvrw + 1);
-		    }
-		    else{
-			return solveOne(col - 1, pvrw + 1);
-		    }
-		}   
+		    return solveD(col - 1, pvrw + 1);
+		}
 	    }
 	}
 	return false;
+    }
+    /**private int solveC(int col, int pvrw){
+	if (board.length == 2 || board.length == 3){
+	    return solutionCount;
+	}
+	if (col == board.length){
+	    solutionCount++;
+	    pvrw = prevRow(col - 1);
+	    removeQueen(col - 1, pvrw);
+	    pvrw = prevRow(col - 2);
+	    removeQueen(col - 2, pvrw);
+	    if (pvrw + 1 == board.length){
+		pvrw = prevRow(col - 3);
+		removeQueen(col - 3, pvrw);
+		return solveC(col - 3, pvrw + 1);
+	    }
+	    else{
+		return solveC(col - 2, pvrw + 1);
+	    }
+	}
+	for (int r = pvrw; r < board.length; r++){
+	    if (board[col][r] == 0){
+		addQueen(col, r);
+		if (col + 1 == board.length){
+		    pvrw = prevRow (col - 1);
+		    removeQueen(col - 1, pvrw);
+		    return solveC(col - 1, pvrw + 1);
+		}
+		else{
+		    return solveC(col + 1, 0);
+		}
+	    }	    
+	    else if (r == board.length - 1){
+		pvrw = prevRow(col - 1);
+		removeQueen(col - 1, pvrw);
+		if (pvrw + 1 == board.length){
+		    pvrw = prevRow(col - 2);
+		    removeQueen(col - 2, pvrw);
+		    return solveC(col - 2, pvrw + 1);
+		}
+		else{
+		    return solveC(col - 1, pvrw + 1);
+		}
+	    }
+	}
+	return solutionCount;
 	}*/
-    //private boolean solveCount(int col, int prevRow){
-
- 
+    private int solveF(){
+	removeQueen(board.length - 1, prevRow(board.length - 1));
+	for (int i = board.length - 2; i > -1; i--){
+	    if (solveO(i - 1, prevRow(i - 1))){
+		solutionCount++;
+		removeQueen(i - 1, prevRow(i - 1));
+	    }
+	}
+	return solutionCount;
+    }
+    public void solve(){
+	this.solveO(0,0);
+    }
+    public void countSolutions(){
+	solutionCount = 0;
+	this.solveD(0,0);
+	if (solutionCount == 0 && board.length != 2 && board.length != 3){
+	    solutionCount = -1;
+	}
+    }
+    public int getSolutionCount(){
+	return solutionCount;
+    }
     public String toString(){
 	String sum = "";
 	for (int row = 0; row < board.length; row++){
@@ -255,11 +312,12 @@ public class QueenBoard{
 		System.out.println(Q.solveOne(5));
 		Q.addQueen(7,2);
 		System.out.println(Q.solveOne(8));*/
-	QueenBoard B = new QueenBoard(4);
+	//	QueenBoard B = new QueenBoard(1);
 	
-	System.out.println(B.solveOne(0));
-	System.out.println(B.toString());
+	//	B.solve();
+	//	System.out.println(B.solveO(0,0));
+	//System.out.println(B.toString());
+       	//B.countSolutions();
+	//System.out.println(B.getSolutionCount());
     }
 }
-
-//idea to find prevRow: set it equal 

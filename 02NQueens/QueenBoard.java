@@ -1,11 +1,8 @@
-//I was unable to finish the recursive part of the helper function for solutionCount(). I will finish it tomorrow.
 public class QueenBoard{
     private int[][]board;
     private int solutionCount;
-    private int pr = 0;
  
     public QueenBoard(int size){
-	//size = sizeOfBoard;
 	board = new int[size][size];
     }
 
@@ -123,192 +120,37 @@ public class QueenBoard{
 	    return false;
 	}
     }
-    private int prevRow(int col){
-	for (int i = 0; i < board.length; i++){
-	    if (board[col][i] == -1){
-		return i;
-	    }
-	}
-	return -1;
-    }
-
-    private boolean solveO(int col, int pvrw){
-	if (board.length == 2 || board.length == 3){
-	    return false;
-	}
-	if (col == board.length){
-	    return true;
-	}
-	for (int r = pvrw; r < board.length; r++){
-	    if (board[col][r] == 0){
-		addQueen(col, r);
-		if (solveO(col + 1, 0)){
-		    return true;
-		}	
-	    }	    
-	    else if (r == board.length - 1){
-		pvrw = prevRow(col - 1);
-		removeQueen(col - 1, pvrw);
-		if (pvrw + 1 == board.length){
-		    pvrw = prevRow(col - 2);
-		    removeQueen(col - 2, pvrw);
-		    return solveO(col - 2, pvrw + 1);
-		}
-		else{
-		    return solveO(col - 1, pvrw + 1);
-		}
-	    }
-	}
-	return false;
-    }
-
-    private int solveC(int col, int pvrw){
-	if (board.length == 2 || board.length == 3){
-	    return solutionCount;
-	}
-	solveO(col, pvrw);
-	pvrw = prevRow(board.length - 1);
-	removeQueen(board.length - 1, pvrw);
-	pvrw = prevRow(board.length - 2);
-	removeQueen(board.length - 2, pvrw);
-	solveC(board.length - 2, pvrw + 1);
-	/**if (solveO (board.length - 2, pvrw)){
-	    solutionCount++;
-	    return solveO(board.length - 1, pvrw);*/
-	//}
-	//	else{
-	    return solutionCount;
-	    //}
-    }
-     private boolean solveD(int col, int pvrw){
-	if (board.length == 2 || board.length == 3){
-	    return false;
-	}
-	if (col == board.length){
-	    solutionCount++;
-	    return true;
-	}
-	for (int r = pvrw; r < board.length; r++){
-	    if (board[col][r] == 0){
-		addQueen(col, r);
-		if (solveD(col + 1, 0)){
-		    return true;
-		}	
-	    }	    
-	    else if (r == board.length - 1){
-		pvrw = prevRow(col - 1);
-		removeQueen(col - 1, pvrw);
-		if (pvrw + 1 == board.length){
-		    pvrw = prevRow(col - 2);
-		    removeQueen(col - 2, pvrw);
-		    return solveD(col - 2, pvrw + 1);
-		}
-		else{
-		    return solveD(col - 1, pvrw + 1);
-		}
-	    }
-	}
-	return false;
-    }
-    /**private int solveC(int col, int pvrw){
-	if (board.length == 2 || board.length == 3){
-	    return solutionCount;
-	}
-	if (col == board.length){
-	    solutionCount++;
-	    pvrw = prevRow(col - 1);
-	    removeQueen(col - 1, pvrw);
-	    pvrw = prevRow(col - 2);
-	    removeQueen(col - 2, pvrw);
-	    if (pvrw + 1 == board.length){
-		pvrw = prevRow(col - 3);
-		removeQueen(col - 3, pvrw);
-		return solveC(col - 3, pvrw + 1);
-	    }
-	    else{
-		return solveC(col - 2, pvrw + 1);
-	    }
-	}
-	for (int r = pvrw; r < board.length; r++){
-	    if (board[col][r] == 0){
-		addQueen(col, r);
-		if (col + 1 == board.length){
-		    pvrw = prevRow (col - 1);
-		    removeQueen(col - 1, pvrw);
-		    return solveC(col - 1, pvrw + 1);
-		}
-		else{
-		    return solveC(col + 1, 0);
-		}
-	    }	    
-	    else if (r == board.length - 1){
-		pvrw = prevRow(col - 1);
-		removeQueen(col - 1, pvrw);
-		if (pvrw + 1 == board.length){
-		    pvrw = prevRow(col - 2);
-		    removeQueen(col - 2, pvrw);
-		    return solveC(col - 2, pvrw + 1);
-		}
-		else{
-		    return solveC(col - 1, pvrw + 1);
-		}
-	    }
-	}
-	return solutionCount;
-	}*/
-    private int solveF(){
-	removeQueen(board.length - 1, prevRow(board.length - 1));
-	for (int i = board.length - 2; i > -1; i--){
-	    if (solveO(i - 1, prevRow(i - 1))){
-		solutionCount++;
-		removeQueen(i - 1, prevRow(i - 1));
-	    }
-	}
-	return solutionCount;
-    }
     private boolean solveY(int col){
+	//base case
 	if (col == board.length){
 	    return true;
 	}
 	for (int r = 0; r < board.length; r++){
-	    //boolean isGood = (board[col][r] == 0);
 	    if (board[col][r] == 0){
 		addQueen(col, r);
 		if (solveY(col + 1)){
 		    return true;
 		}
 	    }
-	    //else{
-		//
-		removeQueen(col, r);
-		//solveY(col);
-		//}
+	    removeQueen(col, r);
 	}
 	return false;
     }
-    private int solveZ(int col){
+    private boolean solveZ(int col){
+	//base case
 	if (col == board.length){
 	    solutionCount++;
-	    solveZ(col + 1);
+	    return true;
 	}
 	for (int r = 0; r < board.length; r++){
 	    if (board[col][r] == 0){
 		addQueen(col, r);
-		if (solveY(col + 1)){
-		    solutionCount++;
-		    return solveZ(col + 1);
-		}
+		if (solveZ(col + 1)){
+		}    
+		removeQueen(col, r);	
 	    }
-	    //else{
-		removeQueen(col, r);
-		//solveZ
-		//solveY(col);
-		//}
 	}
-	//return solutionCount;
-	//	solveZ(col + 1);
-        return solutionCount;//solveZ(col + 1);
-	
+        return false;	
     }	
 	    
     public void solve(){
@@ -316,12 +158,12 @@ public class QueenBoard{
     }
     public void countSolutions(){
 	solutionCount = 0;
-       	this.solveD(0,0);
+       	this.solveZ(0);
+    }
+    public int getSolutionCount(){
 	if (solutionCount == 0 && board.length != 2 && board.length != 3){
 	    solutionCount = -1;
 	}
-    }
-    public int getSolutionCount(){
 	return solutionCount;
     }
     public String toString(){
@@ -357,15 +199,16 @@ public class QueenBoard{
 		System.out.println(Q.solveOne(5));
 		Q.addQueen(7,2);
 		System.out.println(Q.solveOne(8));*/
-       	/////QueenBoard B = new QueenBoard(4);
+	//QueenBoard B = new QueenBoard(3);
 	//System.out.println(B.solveY(0));
 	//System.out.println(B.toString());
-	
        	//B.solve();
-	//	System.out.println(B.solveO(0,0));
+	//System.out.println(B.solveO(0,0));
         //System.out.println(B.toString());
-	/////System.out.println(B.solveZ(0));
-	/////System.out.println(B.toString());
+	//System.out.println(B.solveZ(0));
+	//B.countSolutions();
+	//System.out.println(B.toString());
+	//System.out.println(B.getSolutionCount());
        	//B.countSolutions();
 	//System.out.println(B.getSolutionCount());
     }

@@ -1,7 +1,7 @@
 //I was unable to finish the recursive part of the helper function for solutionCount(). I will finish it tomorrow.
 public class QueenBoard{
     private int[][]board;
-    private int solutionCount = -1;
+    private int solutionCount;
     private int pr = 0;
  
     public QueenBoard(int size){
@@ -266,12 +266,57 @@ public class QueenBoard{
 	}
 	return solutionCount;
     }
+    private boolean solveY(int col){
+	if (col == board.length){
+	    return true;
+	}
+	for (int r = 0; r < board.length; r++){
+	    //boolean isGood = (board[col][r] == 0);
+	    if (board[col][r] == 0){
+		addQueen(col, r);
+		if (solveY(col + 1)){
+		    return true;
+		}
+	    }
+	    //else{
+		//
+		removeQueen(col, r);
+		//solveY(col);
+		//}
+	}
+	return false;
+    }
+    private int solveZ(int col){
+	if (col == board.length){
+	    solutionCount++;
+	    solveZ(col + 1);
+	}
+	for (int r = 0; r < board.length; r++){
+	    if (board[col][r] == 0){
+		addQueen(col, r);
+		if (solveY(col + 1)){
+		    solutionCount++;
+		    return solveZ(col + 1);
+		}
+	    }
+	    //else{
+		removeQueen(col, r);
+		//solveZ
+		//solveY(col);
+		//}
+	}
+	//return solutionCount;
+	//	solveZ(col + 1);
+        return solutionCount;//solveZ(col + 1);
+	
+    }	
+	    
     public void solve(){
-	this.solveO(0,0);
+	this.solveY(0);
     }
     public void countSolutions(){
 	solutionCount = 0;
-	this.solveD(0,0);
+       	this.solveD(0,0);
 	if (solutionCount == 0 && board.length != 2 && board.length != 3){
 	    solutionCount = -1;
 	}
@@ -312,11 +357,15 @@ public class QueenBoard{
 		System.out.println(Q.solveOne(5));
 		Q.addQueen(7,2);
 		System.out.println(Q.solveOne(8));*/
-	//	QueenBoard B = new QueenBoard(1);
-	
-	//	B.solve();
-	//	System.out.println(B.solveO(0,0));
+       	/////QueenBoard B = new QueenBoard(4);
+	//System.out.println(B.solveY(0));
 	//System.out.println(B.toString());
+	
+       	//B.solve();
+	//	System.out.println(B.solveO(0,0));
+        //System.out.println(B.toString());
+	/////System.out.println(B.solveZ(0));
+	/////System.out.println(B.toString());
        	//B.countSolutions();
 	//System.out.println(B.getSolutionCount());
     }

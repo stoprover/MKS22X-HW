@@ -1,9 +1,53 @@
 public class KnightBoard{
     private int[][]board;
+    private int[][]moves;
 
     public KnightBoard(int startingRows, int startingCols){
 	board = new int[startingRows][startingCols];
+	moves = new int[startingRows][startingCols];
     }
+    public void createNM(){
+	for (int c = 2; c < moves.length - 2; c++){
+	    for (int r = 2; r < moves.length - 2; r++){
+		moves[c][r] = 8;
+	    }
+	}
+	for (int r = 2; r < moves.length - 2; r++){
+	    moves[0][r] = 4;
+	    moves[1][r] = 6;
+	    moves[moves.length - 2][r] = 6;
+	    moves[moves.length - 1][r] = 4;
+	}
+	/**for (int c = 2; c < moves.length - 2; c++){
+	    moves[c][0] = 4;
+	    moves[c][1] = 6;
+	    moves[c][moves.length - 2] = 6;
+	    moves[c][moves.length - 1] = 4;
+	}
+	moves[0][0] = 2;
+	moves[0][moves[0].length - 1] = 2;
+	moves[moves.length - 1][0] = 2;
+	moves[moves.length - 1][moves[moves.length - 1].length - 1] = 2;
+	moves[1][1] = 4;
+	moves[1][moves[1].length - 2] = 4;
+	moves[moves.length - 2][1] = 4;
+	moves[moves.length - 2][moves[moves.length - 2].length - 2] = 4;
+	moves[0][1] = 3;
+	moves[1][0] = 3;
+	moves[0][moves[0].length - 2] = 3;
+	moves[1][moves[1].length - 1] = 3;
+	moves[moves.length - 1][1] = 3;
+	moves[moves.length - 1][moves[moves.length - 1].length - 2] = 3;
+	moves[moves.length - 2][0] = 3;
+	moves[moves.length - 2][moves[moves.length - 2].length - 1] = 3;
+	System.out.println(moves);*/
+    }
+
+    /**for (int c = 0; c < numMoves.length; c++){
+	    if (c == 0 || c == numMoves.length - 1){
+		for (int r = 0; r < numMoves.length; r++){
+		if (r == 0 || r == numMoves.length - 1){*/
+
 
     public String toString(){
 	String sum = "";
@@ -20,4 +64,27 @@ public class KnightBoard{
 	}
 	return sum;
     }
+    public String movesDebug(){
+	String sum = "";
+	for (int r = 0; r < moves.length; r++){
+	    for (int c = 0; c < moves[r].length; c++){
+		if (moves[r][c] < 10){
+		    sum += "  " + moves[r][c];
+		}
+		else{
+		    sum += " " + moves[r][c];
+		}
+	    }
+	    sum += "\n";
+	}
+	return sum;
+    }
+    public static void main(String[]args){
+	KnightBoard K = new KnightBoard(6, 8);
+	K.createNM();
+	System.out.println(K.movesDebug());
+	System.out.println(K.toString());
+    }
+}
+
     //prioritize square w/ fewest possible moves?

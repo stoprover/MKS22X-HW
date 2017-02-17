@@ -6,24 +6,24 @@ public class KnightBoard{
 	board = new int[startingRows][startingCols];
 	moves = new int[startingRows][startingCols];
     }
-    public void createNM(){
+    public void createMoves(){
 	for (int c = 2; c < moves.length - 2; c++){
-	    for (int r = 2; r < moves.length - 2; r++){
+	    for (int r = 2; r < moves[c].length - 2; r++){
 		moves[c][r] = 8;
 	    }
 	}
-	for (int r = 2; r < moves.length - 2; r++){
+	for (int r = 2; r < moves[0].length - 2; r++){
 	    moves[0][r] = 4;
 	    moves[1][r] = 6;
 	    moves[moves.length - 2][r] = 6;
 	    moves[moves.length - 1][r] = 4;
-	}
-	/**for (int c = 2; c < moves.length - 2; c++){
+	    }
+	for (int c = 2; c < moves.length - 2; c++){
 	    moves[c][0] = 4;
 	    moves[c][1] = 6;
-	    moves[c][moves.length - 2] = 6;
-	    moves[c][moves.length - 1] = 4;
-	}
+	    moves[c][moves[c].length - 2] = 6;
+	    moves[c][moves[c].length - 1] = 4;
+	    }
 	moves[0][0] = 2;
 	moves[0][moves[0].length - 1] = 2;
 	moves[moves.length - 1][0] = 2;
@@ -40,13 +40,20 @@ public class KnightBoard{
 	moves[moves.length - 1][moves[moves.length - 1].length - 2] = 3;
 	moves[moves.length - 2][0] = 3;
 	moves[moves.length - 2][moves[moves.length - 2].length - 1] = 3;
-	System.out.println(moves);*/
     }
 
-    /**for (int c = 0; c < numMoves.length; c++){
-	    if (c == 0 || c == numMoves.length - 1){
-		for (int r = 0; r < numMoves.length; r++){
-		if (r == 0 || r == numMoves.length - 1){*/
+
+    /**public boolean helper(int row, int col, int num){
+	if (row * col == num){
+	    return true;
+	}
+	//update moves, update knights
+	}*/
+    public boolean updateMoves(int col, int row){
+	moves[col][row] = 0;
+	//update all the ones leading from this: (moves[x][y] = moves[x][y] - 1;
+	return true;
+    }
 
 
     public String toString(){
@@ -81,7 +88,8 @@ public class KnightBoard{
     }
     public static void main(String[]args){
 	KnightBoard K = new KnightBoard(6, 8);
-	K.createNM();
+	K.createMoves();
+	System.out.println(K.updateMoves(2, 5));
 	System.out.println(K.movesDebug());
 	System.out.println(K.toString());
     }

@@ -176,7 +176,7 @@ public class KnightBoard{
 	return sum;
     }
     public static void main(String[]args){
-	//KnightBoard T = new KnightBoard(29, 23);
+	//KnightBoard T = new KnightBoard(41, 41);
 	//T.createMoves();
 	//System.out.println(T.movesDebug());
 	//T.board[0][1] = 12;

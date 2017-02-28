@@ -1,4 +1,4 @@
-import java.until.*;
+import java.util.*;
 import java.io.*;
 
 public class Maze{
@@ -7,7 +7,8 @@ public class Maze{
 
     public Maze(String filename) throws FileNotFoundException{
 	animate = false;
-        File infile = new File(filename);// can be a path"/full/path/to/file.txt" 
+	ReadFile R = new ReadFile(filename);
+        /**File infile = new File(filename);// can be a path"/full/path/to/file.txt" 
         Scanner inf = new Scanner (infile);
         int lineNumber = 1;
 	int c = 0;
@@ -24,6 +25,6 @@ public class Maze{
 	    r++;
 	}
 	maze = new char[c][r];	
-	while (inf.hasNextChar())//now we start filling maze      
+	while (inf.hasNextChar())//now we start filling maze   */   
  
     }  

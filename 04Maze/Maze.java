@@ -124,8 +124,25 @@ public class Maze{
 	maze[line][col] = '.';
 	return false;
     }
+    private boolean solveH2(int line, int col){
+	if (!solveH(line, col)){
+	    for (int i = 0; i < maze.length; i++){
+		for (int j = 0; j < maze[0].length; j++){
+		    if (maze[i][j] == '@'){
+			maze[i][j] = '.';
+		    }
+		}
+	    }
+	    return false;
+	}
+	else{
+	    return true;
+	}
+    }
     public boolean solve(){
-	return solveH(sLine, sCol);
+	return solveH2(sLine, sCol);
+	
+	
     }
     
     public String toString(){

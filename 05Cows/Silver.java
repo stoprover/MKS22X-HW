@@ -34,7 +34,7 @@ public class Silver{
 		    //}
 		}
 	    }
-	    System.out.println(this.printPasture());
+	    // System.out.println(this.printPasture());
 
 	    r1 = sc.nextInt();
 	    c1 = sc.nextInt();
@@ -119,6 +119,15 @@ public class Silver{
 	}
 	}*/
     //private void modifyIt(){
+    private boolean inBound(int i, int j){
+	if (i - 1){
+try{
+	    int k = board[i][j];
+	    return true;
+	}catch(ArrayIndexOutOfBoundsException e){
+	    return false;
+	}
+    }
 	
     private void getThere(int secs, int row, int col){
 	past1[row][col] = 1;
@@ -288,13 +297,13 @@ public class Silver{
     public int runAll(){
     	this.createPasts();
 	this.getThere(t, r1, c1);
-	return this.past1[r2][c2];
+	return this.past2[r2][c2];
     }
     public static void main(String[]args){
-	Silver s = new Silver("test4.txt");
+	Silver s = new Silver("test2.txt");
 	System.out.println("Answer: " + s.runAll());
-	System.out.println(s.printPast1());
-	System.out.println(s.printPast2());
+	//System.out.println(s.printPast1());
+	//System.out.println(s.printPast2());
     }
 }
 	    

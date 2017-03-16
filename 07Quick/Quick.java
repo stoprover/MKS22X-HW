@@ -13,7 +13,24 @@ public class Quick{
 	int indOfChosen = end;
 	int i = start;
 	//possibly move the pivot thing to end of your subsection, then start moving everyone else over to just before it or just after it until you reach some placeholder for index of the first element you moved?
-	
+	int q = end;//possibly end - 1
+	int p = start;//current var you're at
+	while (q >= start){
+	   
+	    if (data[p] >= atPivot){
+		int temp = data[p];
+		for (int j = p; j < end; j++){
+		    data[j] = data[j + 1];
+		}
+		data[end] = temp;
+	    }
+	    if (data[q] < atPivot){
+		p++;
+		//int temp = data[start];
+	    }
+	    q--;
+	}
+
 	/**while (i <= end){
 	    if (data[i] > atPivot){
 		int temp = data[i];
@@ -40,11 +57,11 @@ public class Quick{
 		i -= 1;
 		System.out.println(toString(data));
 		}*/
-	for (int k = start; k < end; k++){
+	/**for (int k = start; k < end; k++){
 	    if (data[k] == atPivot){
 		indOfChosen = pivot;
 	    }
-	}
+	    }*/
 	
 	for (int l = start; l <= end; l++){
 	    if (data[l] == atPivot){

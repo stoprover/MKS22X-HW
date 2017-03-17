@@ -102,9 +102,10 @@ public class Silver2{
 	return (ary[i][j] == -1);
     }
 
-    private void genValsFromOther(int secs, int row, int col){ //something having to do with secs may have to be secs, secs - 1, or secs + 1 (idk)
+    private int genValsFromOther(int secs, int row, int col){ //something having to do with secs may have to be secs, secs - 1, or secs + 1 (idk)
 	past1[row][col] = 1;
-	for (int i = 1; i <= secs; i++){//1 bc 0 was taken care of in line above
+	int i;
+	for (i = 1; i <= secs; i++){//1 bc 0 was taken care of in line above
 	    if (i % 2 == 0){//take from past2 into past1
 		for (int j = 0; j < past2.length; j++){
 		    for (int k = 0; k < past2[0].length; k++){
@@ -155,22 +156,37 @@ public class Silver2{
 		    }
 		}
 	    }
-	    System.out.println("i: " + i);
-	    this.printAll();
 	}
+	if (i % 2 == 1){
+	    return past1[r2][c2];
+	}
+	return past2[r2][c2];
     }
-    public void runAll(){
+    public int runAll(){
 	this.createPasts();
-	this.printAll();
-	this.genValsFromOther(2, r1, c1); //this will need some more testing right (aka change first input) here but i could very well be close to the solution.
-	//also you have to figure out from which board we're going to get our answer, but that's a minor issue
-	//this.printAll();
+	return this.genValsFromOther(t, r1, c1);
     }
  
     public static void main(String[]args){
-	Silver2 s = new Silver2("test2.txt");
-	//System.out.println("Answer: " + s.runAll());
-        s.runAll();
-	//System.out.println(s.printPast2());
+	/**Silver2 a = new Silver2("Stest1.txt");
+        System.out.println(a.runAll()); //1
+	Silver2 b = new Silver2("Stest2.txt");
+        System.out.println(b.runAll()); //74
+	Silver2 c = new Silver2("Stest3.txt");
+        System.out.println(c.runAll()); //6435
+	Silver2 d = new Silver2("Stest4.txt");
+        System.out.println(d.runAll()); //339246
+	Silver2 e = new Silver2("Stest5.txt");
+        System.out.println(e.runAll()); //0
+	Silver2 f = new Silver2("Stest6.txt");
+        System.out.println(f.runAll()); //14396412
+	Silver2 g = new Silver2("Stest7.txt");
+        System.out.println(g.runAll()); //1533810
+	Silver2 h = new Silver2("Stest8.txt");
+        System.out.println(h.runAll()); //456055
+	Silver2 i = new Silver2("Stest9.txt");
+        System.out.println(i.runAll()); //28
+	Silver2 j = new Silver2("Stest10.txt");
+        System.out.println(j.runAll()); //1321670*/
     }
 }

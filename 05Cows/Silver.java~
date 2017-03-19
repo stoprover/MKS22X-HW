@@ -1,7 +1,0 @@
-import java.io.*;
-import java.util.*;
-public class Silver{
-    public Silver(String fileName){
-	readFile(fileName);
-    }
-    private void readFile(String fileName)

@@ -3,19 +3,39 @@ public class Quick{
     public static int part(int [] data, int start, int end){
 	//Random r = new Random();
 	//int pivot = r.nextInt(data.length);
-	int pivot = 3;
-	int atPivot = data[pivot];
+	int pivot = 6;
+	int atPivot = data[pivot]; //3
 	System.out.println("atPivot: " + atPivot);
-	data[pivot] = data[end];
-	data[end] = atPivot;
-	System.out.println("just moved to end" + toString(data));
-	//this for loop (and that's it) is wrong somehow
-	int indOfChosen = end;
-	int i = start;
-	//possibly move the pivot thing to end of your subsection, then start moving everyone else over to just before it or just after it until you reach some placeholder for index of the first element you moved?
-	int q = end;//possibly end - 1
-	int p = start;//current var you're at
-	while (q >= start){
+	for (int i = start; i < pivot; i++){
+	    if (data[i] > atPivot){
+		int temp = data[i];
+		for (int j = i; j < end; j++){
+		    data[j] = data[j + 1];
+		}
+		data[end] = temp;
+		i--;
+		System.out.println("1st \n" + toString(data));
+	    }
+	}
+	for (int i = start; i <= end; i++){
+	    if (data[i] == atPivot){
+		pivot = i;
+		break;
+	    }
+	}
+	/**for (int k = pivot + 1; k <= end; k++){
+	    if (data[k] < atPivot){
+		int temp = data[k];
+		for (int j = k; j > start; j--){
+		    data[j] = data[j - 1];
+		}
+		data[start] = temp;
+		k--;
+		System.out.println("2nd \n" + toString(data));
+	    }
+	    }*/
+
+	/**while (q >= start){
 	   
 	    if (data[p] >= atPivot){
 		int temp = data[p];
@@ -79,16 +99,16 @@ public class Quick{
     }
     public static void main(String[]args){
 	int[]potato = new int[11];
-	potato[0] = 1;
-	potato[1] = 14;
-	potato[2] = 23;
-	potato[3] = 4;
-	potato[4] = 7;
+	potato[0] = 1; //v
+	potato[1] = 14; //v
+	potato[2] = 23; //v
+	potato[3] = 4; //v
+	potato[4] = 7; //v
 	potato[5] = 0;
 	potato[6] = 3;
-	potato[7] = 2;
-	potato[8] = 144;
-	potato[9] = 22;
+	potato[7] = 22; //v
+	potato[8] = 144; //v
+	potato[9] = 2;
 	potato[10] = 12;
 	/**potato[0] = 999;
 	potato[1] = 999;

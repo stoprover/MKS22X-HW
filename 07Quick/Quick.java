@@ -1,12 +1,40 @@
 import java.util.Random;
 public class Quick{
-    public static int part(int [] data, int start, int end){
+    public static int[] part(int [] data, int start, int end){
 	//Random r = new Random();
 	//int pivot = r.nextInt(data.length);
-	int pivot = 6;
+	int pivot = 4;
 	int atPivot = data[pivot]; //3
 	System.out.println("atPivot: " + atPivot);
-	for (int i = start; i < pivot; i++){
+	int i = start;
+	int lt = start;
+	int gt = end;
+	while (i <= gt){
+	    if (data[i] < atPivot){
+		int temp = data[i];
+		data[i] = data[lt];
+		data[lt] = temp;
+		lt++;
+		i++;
+	    }
+	    else if (data[i] == atPivot){
+		i++;
+	    }
+	    else{
+		int temp = data[gt];
+		data[gt] = data[i];
+		data[i] = temp;
+		gt --;
+	    }
+	}
+
+
+
+
+		
+
+
+	/**for (int i = start; i < pivot; i++){
 	    if (data[i] > atPivot){
 		int temp = data[i];
 		for (int j = i; j < end; j++){
@@ -83,12 +111,15 @@ public class Quick{
 	    }
 	    }*/
 	
-	for (int l = start; l <= end; l++){
+	/**for (int l = start; l <= end; l++){
 	    if (data[l] == atPivot){
 		return l;
 	    }
-	}
-	return -1;
+	    }*/
+	int[]ary = new int[2];
+	ary[0] = lt;
+	ary[1] = gt;
+	return ary;
     }
     public static String toString(int[]ary){
 	String sum = "";
@@ -100,14 +131,14 @@ public class Quick{
     public static void main(String[]args){
 	int[]potato = new int[11];
 	potato[0] = 1; //v
-	potato[1] = 14; //v
+	potato[1] = 7; //14; //v
 	potato[2] = 23; //v
 	potato[3] = 4; //v
 	potato[4] = 7; //v
 	potato[5] = 0;
 	potato[6] = 3;
 	potato[7] = 22; //v
-	potato[8] = 144; //v
+	potato[8] = 7; //144; //v
 	potato[9] = 2;
 	potato[10] = 12;
 	/**potato[0] = 999;
@@ -121,8 +152,9 @@ public class Quick{
 	potato[8] = 999;
 	potato[9] = 999;
 	potato[10] = 999;*/
-	System.out.println(toString(potato));
-	System.out.println(part(potato, 0, 10));
-	System.out.println(toString(potato));
+	System.out.println("original: \n" + toString(potato));
+	System.out.println(part(potato, 1, 5)[0]);
+	//System.out.println(part(potato, 0, 10)[0]);
+	System.out.println("new: \n" + toString(potato));
     }
 }

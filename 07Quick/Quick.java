@@ -1,10 +1,12 @@
 import java.util.Random;
 public class Quick{
     public static int[] part(int [] data, int start, int end){
-	//Random r = new Random();
-	//int pivot = r.nextInt(data.length);
-	int pivot = 4;
+	Random r = new Random();
+	int pivot = r.nextInt((end - start) + 1);
+	pivot += start;
+	//int pivot = 1;
 	int atPivot = data[pivot]; //3
+	System.out.println("pivot: " + pivot);
 	System.out.println("atPivot: " + atPivot);
 	int i = start;
 	int lt = start;
@@ -153,7 +155,10 @@ public class Quick{
 	potato[9] = 999;
 	potato[10] = 999;*/
 	System.out.println("original: \n" + toString(potato));
-	System.out.println(part(potato, 1, 5)[0]);
+	int[]ary = new int[2];
+	System.out.println(part(potato, 1, 9));
+	//System.out.println(ary[0]);
+	//System.out.println(ary[1]);
 	//System.out.println(part(potato, 0, 10)[0]);
 	System.out.println("new: \n" + toString(potato));
     }

@@ -11,8 +11,8 @@ public class Quick{
 	    return ary;
 	}
 	int atPivot = data[pivot];
-	System.out.println("pivot: " + pivot);
-	System.out.println("atPivot: " + atPivot);
+	//System.out.println("pivot: " + pivot);
+	//System.out.println("atPivot: " + atPivot);
 	int i = start;
 	int lt = start;
 	int gt = end;
@@ -39,15 +39,22 @@ public class Quick{
 	ary[1] = gt;
 	return ary;
     }
-    public static void quicksort(int[]ary){
-	//something needs to happen if it's length 0
-	part(ary, 0, part(ary, 0, ary.length - 1)[0]);
-	part(ary, part(ary, 0, ary.length - 1)[1], ary.length - 1);
-	//this is probably a high key disaster but idk what's going on anymore so good night
-	//for (int i = 0; i < ary.length - 1; i++){
-	//  if (ary[i] > ary[i + 1]){
+    private static void sortH(int[]ary, int lo, int hi){
+	if (lo < hi){   
+	    int[] ans = new int[2];
+	    ans = part(ary, lo, hi);
+	    sortH(ary, lo, ans[0] - 1);
+	    sortH(ary, ans[1] + 1, hi);
+	    System.out.println("ans[0]: " + ans[0]);
+	    System.out.println("ans[1]: " + ans[1]);
+	}
     }
-		
+
+    public static void quicksort (int[]ary){
+	sortH(ary, 0, ary.length - 1);
+    }
+
+    private static void selectH(int[]ary, int lo, int hi, int k){
 	
     public static String toString(int[]ary){
 	String sum = "";
@@ -58,7 +65,7 @@ public class Quick{
     }
     public static void main(String[]args){
 	int[]potato = new int[11];
-	/**potato[0] = 1; //v
+	potato[0] = 1; //v
 	potato[1] = 7; //14; //v
 	potato[2] = 23; //v
 	potato[3] = 4; //v
@@ -68,8 +75,8 @@ public class Quick{
 	potato[7] = 22; //v
 	potato[8] = 7; //144; //v
 	potato[9] = 2;
-	potato[10] = 12;*/
-	potato[0] = 999;
+	potato[10] = 12;
+	/**potato[0] = 999;
 	potato[1] = 999;
 	potato[2] = 999;
 	potato[3] = 4;
@@ -79,15 +86,16 @@ public class Quick{
 	potato[7] = 2;
 	potato[8] = 999;
 	potato[9] = 999;
-	potato[10] = 999;
-	int[]pop = new int[1];
-	
-	System.out.println("original: \n" + toString(potato));
-	int[]ary = new int[2];
-	System.out.println(part(potato, 3, 7));
+	potato[10] = 999;*/
+	int[]pop = new int[0];
+	//pop[0] = 5;
+	System.out.println("original: \n" + toString(pop));
+	//int[]ary = new int[2];
+	//System.out.println(part(potato, 3, 7));
+	quicksort(pop);
 	//System.out.println(ary[0]);
 	//System.out.println(ary[1]);
 	//System.out.println(part(potato, 0, 10)[0]);
-	System.out.println("new: \n" + toString(potato));
+	System.out.println("new: \n" + toString(pop));
     }
 }

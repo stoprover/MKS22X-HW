@@ -45,8 +45,8 @@ public class Quick{
 	    ans = part(ary, lo, hi);
 	    sortH(ary, lo, ans[0] - 1);
 	    sortH(ary, ans[1] + 1, hi);
-	    System.out.println("ans[0]: " + ans[0]);
-	    System.out.println("ans[1]: " + ans[1]);
+	    //System.out.println("ans[0]: " + ans[0]);
+	    //System.out.println("ans[1]: " + ans[1]);
 	}
     }
 
@@ -54,8 +54,28 @@ public class Quick{
 	sortH(ary, 0, ary.length - 1);
     }
 
-    private static void selectH(int[]ary, int lo, int hi, int k){
-	
+    private static int selectH(int[]ary, int lo, int hi, int k){
+	int[]ans = new int[2];
+	ans = part(ary, lo, hi);
+	if (k < ans[0]){
+	    //System.out.println("k < lt: \n" + toString(ary));
+	    return selectH(ary, lo, ans[0] - 1, k);
+	}
+	if (k > ans[1]){
+	    //System.out.println("k > gt: \n" + toString(ary));
+	    return selectH(ary, ans[1] + 1, hi, k);
+	}
+	//System.out.println("were done: \n" + toString(ary));
+	if (k >= ans[0] && k <= ans[1]){
+	    return ary[k];
+	}
+	return ary[k];
+    }
+	//if (k 
+    ////QUICKSELECT RETURNS AN INT
+    public static int quickselect(int[]ary, int k){
+	return selectH(ary, 0, ary.length - 1, k);
+    }
     public static String toString(int[]ary){
 	String sum = "";
 	for (int i = 0; i < ary.length; i++){
@@ -89,13 +109,12 @@ public class Quick{
 	potato[10] = 999;*/
 	int[]pop = new int[0];
 	//pop[0] = 5;
-	System.out.println("original: \n" + toString(pop));
-	//int[]ary = new int[2];
-	//System.out.println(part(potato, 3, 7));
-	quicksort(pop);
-	//System.out.println(ary[0]);
-	//System.out.println(ary[1]);
-	//System.out.println(part(potato, 0, 10)[0]);
-	System.out.println("new: \n" + toString(pop));
+	System.out.println("original: \n" + toString(potato));
+	System.out.println("omg this is answer: " + quickselect(potato, potato.length - 1));
+	System.out.println("semimodified: \n" + toString(potato));	
+	//quicksort(potato);
+	//System.out.println("new: \n" + toString(potato));
+	// java Quick >out.txt 2> err.txt
+
     }
 }

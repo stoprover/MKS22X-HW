@@ -39,6 +39,7 @@ public class Quick{
 	ary[1] = gt;
 	return ary;
     }
+    //dif sizes, approx 1 million; randomized min to max; randomized 0 to 10; all same value; sorted; reverse sorted
     private static void sortH(int[]ary, int lo, int hi){
 	if (lo < hi){   
 	    int[] ans = new int[2];
@@ -84,8 +85,24 @@ public class Quick{
 	return sum;
     }
     public static void main(String[]args){
+	int []kuzkinaMat = new int[1000000];
+	Random r = new Random();
+	for (int i = 0; i < kuzkinaMat.length; i++){
+	    kuzkinaMat[i] = r.nextInt();
+	}
 	int[]potato = new int[11];
-	potato[0] = 1; //v
+	/**	potato[0] = 10;
+	potato[1] = 9;
+	potato[2] = 8;
+	potato[3] = 7;
+	potato[4] = 6;
+	potato[5] = 5;
+	potato[6] = 4;
+	potato[7] = 3;
+	potato[8] = 2;
+	potato[9] = 1;
+	potato[10] = 0;
+	/**potato[0] = 1; //v
 	potato[1] = 7; //14; //v
 	potato[2] = 23; //v
 	potato[3] = 4; //v
@@ -109,11 +126,11 @@ public class Quick{
 	potato[10] = 999;*/
 	int[]pop = new int[0];
 	//pop[0] = 5;
-	System.out.println("original: \n" + toString(potato));
-	System.out.println("omg this is answer: " + quickselect(potato, potato.length - 1));
-	System.out.println("semimodified: \n" + toString(potato));	
-	//quicksort(potato);
-	//System.out.println("new: \n" + toString(potato));
+	//System.out.println("original: \n" + toString(kuzkinaMat));
+	//System.out.println("omg this is answer: " + quickselect(potato, potato.length - 1));
+	//System.out.println("semimodified: \n" + toString(potato));	
+	quicksort(kuzkinaMat);
+	System.out.println("new: \n" + toString(kuzkinaMat));
 	// java Quick >out.txt 2> err.txt
 
     }

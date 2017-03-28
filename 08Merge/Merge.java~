@@ -1,0 +1,49 @@
+public class Merge{
+    public static void mergesort(int[]ary){
+	if (ary.length == 1){
+	    return;
+	}
+	else{
+	    int[]left = new int[ary.length / 2];
+	    int[]right = new int[ary.length - (ary.length / 2 + 1)];
+	    mergesort(left);
+	    mergesort(right);
+	    recombine(left, right, ary);
+	}
+    }
+    private static void recombine (int[]a, int[]b, int[]ultimate){
+	int nextA = 0;
+	int nextB = 0;
+	for (int i = 0; i < ultimate.length; i++){
+	    //for (int j = 0; j < a.length; j++){
+	    if (a[nextA] <= b[nextB]){
+		ultimate[i] = a[nextA];
+		nextA++;
+	    }
+	    else{
+		ultimate[i] = b[nextB];
+		nextB++;
+	    }
+	}
+    }
+    public static String toString(int[]ary){
+	String sum = "";
+	for (int i = 0; i < ary.length; i++){
+	    sum += ary[i] + " ";
+	}
+	return sum;
+    }
+    public static void main(String[]args){
+	int[]ary = new int[7];
+	ary[0] = 5;
+	ary[1] = 2;
+	ary[2] = 2;
+	ary[3] = 109;
+	ary[4] = -1;
+	ary[5] = 2;
+	ary[6] = 13;
+	System.out.println(toString[ary]);
+	mergesort[ary];
+	System.out.println(toString[ary]);
+    }
+}

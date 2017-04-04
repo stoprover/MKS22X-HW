@@ -34,34 +34,16 @@ public class MyLinkedList{
 	if (index < 0 || index >= this.size()){    
 	    throw new IndexOutOfBoundsException();
 	}
-	LNode current = head;
-	for (int i = 0; i < this.size(); i++){
-	    if (i == index){
-		return current.value;
-	    }
-	    current = current.next;
-	}
-	return 0;
+	return getNode(index).value;
     }
     public int set(int index, int newValue){
 	if (index < 0 || index >= this.size()){    
 	    throw new IndexOutOfBoundsException();
 	}
-	LNode current = head;
-	int temp = 0;
-	for (int i = 0; i < this.size(); i++){
-	    if (i == index){
-		temp = current.value;
-		current.value = newValue;
-		return temp;
-	    }
-	    current = current.next;
-	}
+	int temp = getNode(index).value;
+	getNode(index).value = newValue;
 	return temp;
-	//    throw 
     }
-
-    //Phase II
     public int indexOf(int value){
 	LNode current = head;
 	for (int i = 0; i < this.size(); i++){
@@ -72,8 +54,38 @@ public class MyLinkedList{
 	}
 	return -1;
     }
-    public void add(int index, int value){
+    private LNode getNode(int index){
+	if (index < 0 || index >= this.size()){    
+	    throw new IndexOutOfBoundsException();
+	}
+        LNode current = head;
+	for (int i = 0; i < this.size(); i++){
+	    if (i == index){
+		return current;
+	    }
+	    current = current.next;
+	}
+	return current;
+    }
+    //public void add(int index, int value){
+	
+    /**public void add(int index, int value){
+	if (index < 0 || index >= this.size()){    
+	    throw new IndexOutOfBoundsException();
+	}
 	LNode current = head;
+	if (index == 0){
+	    LNode toBeAdded = new LNode(value, current);
+	}
+	if (index == size - 1){
+	    LNode toBeAdded = new LNode(value);
+	    for (int i = 0; i < this.size(); i++){
+		if (i == index){
+		    current.value = value;
+		return;
+	    }
+	    current = current.next;
+	}
 	for (int i = 0; i < this.size(); i++){
 	    if (i == index){
 		current.value = value;
@@ -81,7 +93,7 @@ public class MyLinkedList{
 	    }
 	    current = current.next;
 	}
-    }
+	}*/
     public String toString(){
 	if (this.size() == 0){
 	    return "[]";
@@ -105,11 +117,11 @@ public class MyLinkedList{
 	System.out.println(idk.add(6));
 	System.out.println(idk.add(8));
 	System.out.println(idk.add(11));
-	System.out.println(idk.add(7));
+	System.out.println(idk.add(14));
 	System.out.println(idk.toString());
 	System.out.println(idk.size());
-	//System.out.println(idk.set(1, 23));
-	//System.out.println(idk.get(1));
+	//System.out.println(idk.set(5, 23));
+	//System.out.println(idk.get(-1));
 	//System.out.println(idk.size());
 	//System.out.println(idk.toString());
 	//System.out.println("size: " + idk.size());
@@ -120,6 +132,8 @@ public class MyLinkedList{
 	//System.out.println(idk.set(1, 4));
 	//System.out.println(idk.indexOf(11));
 	//System.out.println(idk.indexOf(4));
+	//idk.add(2, 14343);
+	//System.out.println(idk.getNode(-1).value);
 	System.out.println(idk.size());
 	System.out.println(idk.toString());
 	System.out.println("\n \n \n");
@@ -128,15 +142,16 @@ public class MyLinkedList{
 	MyLinkedList emp = new MyLinkedList();
 	System.out.println(emp.size());
 	System.out.println(emp.toString());
+	//System.out.println(emp.getNode(-1));
 	//System.out.println(emp.indexOf(1));
 	//System.out.println(emp.indexOf(0));
 	//	System.out.println(emp.get(-1));
-	//System.out.println(emp.get(0));
+	//System.out.println(emp.get(-1));
 	//System.out.println(emp.add(4));
 	//System.out.println(emp.get(0));
 	//System.out.println(emp.size());
 	//System.out.println(emp.toString());
-	//System.out.println(emp.set(1, 4));
+	//System.out.println(emp.set(-1, 4));
 	System.out.println(emp.toString());
 	System.out.println(emp.size());
     }

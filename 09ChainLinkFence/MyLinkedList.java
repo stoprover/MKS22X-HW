@@ -1,5 +1,5 @@
 import java.util.*;
-public class MyLinkedList{
+public class MyLinkedList{//implements Iterable<Integer>{//HAHAHAHA THIS IS A DISASTER
     private LNode head;
     private LNode tail;
     private int size;
@@ -26,6 +26,14 @@ public class MyLinkedList{
 	//System.out.println(head.value);
     }
     
+    //Iterator<Integer> it = this.iterator(); THIS MAY BE RIGHT OR NOT AND IDK
+
+    /**public boolean hasNext(){
+return this.next != null;
+}
+
+public int next()*/
+
     public int size(){
 	return size;
     }
@@ -46,6 +54,9 @@ public class MyLinkedList{
 
     private void addAfter(LNode location, LNode toBeAdded){
 	//use with current!!!!!!! from getNode (aka results of it will be location)
+	if (size == 0){
+	    throw new NullPointerException("Size is 0; there is nothing to add after.");
+	}
 	size++;
 	if (location.next == null){
 	    location.next = toBeAdded;
@@ -60,6 +71,9 @@ public class MyLinkedList{
 	}
     }
     private void remove (LNode target){
+	if (size == 0){
+	    throw new NullPointerException("Size is 0; nothing can be removed.");
+	}
 	size--;
 	if (target.next == null){
 	    target.prev.next = null;
@@ -101,6 +115,9 @@ public class MyLinkedList{
 	}
 	return -1;
     }
+    public void add (int index, int value){
+	if (index == 0){
+
 
     //private void addAfter(//int index???, LNode toBeAdded){//(LNode location, LNode toBeAdded){
 
@@ -204,12 +221,17 @@ public class MyLinkedList{
 	System.out.println(idk.size());
 	//System.out.println(idk.toString());
 	System.out.println("\n \n \n");
-	/**
+	
        	System.out.println("EMP");
 	MyLinkedList emp = new MyLinkedList();
 	System.out.println(emp.size());
-	System.out.println(emp.toString());
+	//System.out.println(emp.toString());
 	System.out.println(emp.printList());
+	LNode q = idk.new LNode (54, null, null);
+	//emp.addAfter(emp.getNode(0),q);
+	//System.out.println(idk.printList());
+	//System.out.println(idk.size());
+	//emp.remove(q);
 	//System.out.println(emp.getNode(-1));
 	//System.out.println(emp.indexOf(1));
 	//System.out.println(emp.indexOf(0));
@@ -220,7 +242,7 @@ public class MyLinkedList{
 	//System.out.println(emp.size());
 	//System.out.println(emp.toString());
 	//System.out.println(emp.set(-1, 4));
-	System.out.println(emp.toString());
-	System.out.println(emp.size());*/
+	System.out.println(emp.printList());
+	System.out.println(emp.size());
     }
 }

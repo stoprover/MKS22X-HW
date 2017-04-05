@@ -25,6 +25,50 @@ public class MyLinkedList{
 	head.prev = null;
 	//System.out.println(head.value);
     }
+    
+    public int size(){
+	return size;
+    }
+
+    private LNode getNode(int index){
+	if (index < 0 || index >= this.size()){    
+	    throw new IndexOutOfBoundsException();
+	}
+        LNode current = head;
+	for (int i = 0; i < this.size(); i++){
+	    if (i == index){
+		return current;
+	    }
+	    current = current.next;
+	}
+	return current;
+    }
+
+    private void addAfter(LNode location, LNode toBeAdded){
+	//use with current!!!!!!! from getNode (aka results of it will be location)
+	size++;
+	if (location.next == null){
+	    location.next = toBeAdded;
+	    toBeAdded.prev = location;
+	    toBeAdded.next = null;
+	}
+	else{
+	    location.next.prev = toBeAdded;
+	    toBeAdded.next = location.next;
+	    toBeAdded.prev = location;
+	    location.next = toBeAdded;
+	}
+    }
+    private void remove (LNode target){
+	size--;
+	if (target.next == null){
+	    target.prev.next = null;
+	}
+	else{
+	    target.prev.next = target.next;
+	    target.next.prev = target.prev;
+	}
+    }
     public boolean add(int val){
 	LNode newOne = new LNode(val, head, null);
 	size++;
@@ -32,9 +76,7 @@ public class MyLinkedList{
 	head = newOne;
 	return true;
     }
-    public int size(){
-	return size;
-    }
+    
     public int get(int index){
 	/**if (index < 0 || index >= this.size()){    
 	    throw new IndexOutOfBoundsException();
@@ -59,20 +101,8 @@ public class MyLinkedList{
 	}
 	return -1;
     }
-    private LNode getNode(int index){
-	if (index < 0 || index >= this.size()){    
-	    throw new IndexOutOfBoundsException();
-	}
-        LNode current = head;
-	for (int i = 0; i < this.size(); i++){
-	    if (i == index){
-		return current;
-	    }
-	    current = current.next;
-	}
-	return current;
-    }
-    private void addAfter(//int index???, LNode toBeAdded){//(LNode location, LNode toBeAdded){
+
+    //private void addAfter(//int index???, LNode toBeAdded){//(LNode location, LNode toBeAdded){
 
     //public void add(int index, int value){
 	
@@ -147,7 +177,7 @@ public class MyLinkedList{
 	System.out.println(idk.add(8));
 	System.out.println(idk.add(11));
 	System.out.println(idk.add(14));
-	System.out.println(idk.toString());
+	//System.out.println(idk.toString());
 	System.out.println(idk.printList());
 	System.out.println(idk.size());
 	//System.out.println(idk.set(5, 23));
@@ -164,10 +194,17 @@ public class MyLinkedList{
 	//System.out.println(idk.indexOf(4));
 	//idk.add(2, 14343);
 	//System.out.println(idk.getNode(-1).value);
+	//LNode q = new LNode (null, 54, null);
+	//LNode q = idk.new LNode (54, null, null);
+        //idk.addAfter(idk.getNode(1),q);
+	//System.out.println(idk.printList());
+	//System.out.println(idk.size());
+	//idk.remove(q);
+	System.out.println(idk.printList());
 	System.out.println(idk.size());
-	System.out.println(idk.toString());
+	//System.out.println(idk.toString());
 	System.out.println("\n \n \n");
-	
+	/**
        	System.out.println("EMP");
 	MyLinkedList emp = new MyLinkedList();
 	System.out.println(emp.size());
@@ -184,6 +221,6 @@ public class MyLinkedList{
 	//System.out.println(emp.toString());
 	//System.out.println(emp.set(-1, 4));
 	System.out.println(emp.toString());
-	System.out.println(emp.size());
+	System.out.println(emp.size());*/
     }
 }

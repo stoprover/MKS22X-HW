@@ -116,7 +116,23 @@ public int next()*/
 	return -1;
     }
     public void add (int index, int value){
+	LNode toBeAdded = new LNode(value, getNode(index), getNode(index - 1));
+	LNode forward = getNode(index);
 	if (index == 0){
+	    //toBeAdded.next = forward;
+	    forward.prev = toBeAdded;
+	    LNode head = toBeAdded;
+	}
+	else{
+	    LNode aftward = getNode(index - 1);
+	    //toBeAdded.next = forward;
+	    //toBeAdded.prev = aftward;
+	    aftward.next = toBeAdded;
+	    forward.prev = toBeAdded;
+	}
+	size++;
+    }
+
 
 
     //private void addAfter(//int index???, LNode toBeAdded){//(LNode location, LNode toBeAdded){
@@ -156,11 +172,18 @@ public int next()*/
 	else{
 	    LNode current = head;
 	    for (int i = 0; i < size; i++){
+		//System.out.println(current.prev);		
 		if (i == 0){
 		    sum += "P: " + null + "; " + i + ": " + current.value + "; N: " + current.next.value + "\n";
+		    System.out.println("0 done");
+		}
+		else if (i == size - 1){
+		    sum += "P: " + current.prev.value + "; " + i + ": " + current.value + "; N: " + null + "\n";
+		    System.out.println("last done");
 		}
 		else{
 		    sum += "P: " + current.prev.value + "; " + i + ": " + current.value + "; N: " + current.next.value + "\n";
+		    System.out.println(i + " done");
 		}
 		current = current.next;
 	    }
@@ -217,8 +240,15 @@ public int next()*/
 	//System.out.println(idk.printList());
 	//System.out.println(idk.size());
 	//idk.remove(q);
+	idk.add(0, 476);
 	System.out.println(idk.printList());
 	System.out.println(idk.size());
+	/**idk.add(2, 5049);
+	System.out.println(idk.printList());
+	System.out.println(idk.size());
+	idk.add(idk.size() - 1, 324);
+	System.out.println(idk.printList());
+	System.out.println(idk.size());*/
 	//System.out.println(idk.toString());
 	System.out.println("\n \n \n");
 	

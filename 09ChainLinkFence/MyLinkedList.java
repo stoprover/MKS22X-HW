@@ -1,5 +1,5 @@
 import java.util.*;
-public class MyLinkedList{//implements Iterable<Integer>{//HAHAHAHA THIS IS A DISASTER
+public class MyLinkedList implements Iterable<Integer>{//HAHAHAHA THIS IS A DISASTER
     private LNode head;
     private LNode tail;
     private int size;
@@ -16,23 +16,43 @@ public class MyLinkedList{//implements Iterable<Integer>{//HAHAHAHA THIS IS A DI
 	    next = nex;
 	    prev = pre;
 	}
+	public String toString(){
+	    return value + "";
+	}
     }
 
+    
+    private class LLIterator implements Iterator<Integer>{
+	private LNode hd;
+	private MyLinkedList l;
+	public LLIterator(MyLinkedList mll){
+	    l = mll;
+	    hd = l.head;
+	}
+	public boolean hasNext(){
+	    return hd != null;
+	}
+	public Integer next() {
+	    if (hasNext()){
+		int val = hd.value;
+		hd = hd.next;
+		return val;
+	    }
+	    else{
+		throw new NoSuchElementException();
+	    }
+	    
+	}
+	public void remove(){
+	    throw new UnsupportedOperationException();
+	}
+    }
     public MyLinkedList(){
-	head = new LNode (0);//what on earth is this
+	head = new LNode (0);
 	size = 0;
 	head.next = null;
 	head.prev = null;
-	//System.out.println(head.value);
     }
-    
-    //Iterator<Integer> it = this.iterator(); THIS MAY BE RIGHT OR NOT AND IDK
-
-    /**public boolean hasNext(){
-return this.next != null;
-}
-
-public int next()*/
 
     public int size(){
 	return size;
@@ -78,29 +98,60 @@ public int next()*/
 	if (target.next == null){
 	    target.prev.next = null;
 	}
+	else if (target.prev == null){
+	    target.next.prev = null;
+	}
 	else{
 	    target.prev.next = target.next;
 	    target.next.prev = target.prev;
 	}
     }
+    public int remove (int index){
+	if (size == 0){
+	    throw new NullPointerException("Size is 0; nothing can be removed");
+	}
+	LNode toBeRemoved = getNode(index);
+       	int val = toBeRemoved.value;
+	if (size == 1){
+	    head = null;
+	    tail = null;
+	    size = 0;
+	    return val;
+	}
+	if (toBeRemoved == head && toBeRemoved == tail){
+	    head = null;
+	    tail = null;
+	}
+	else if (toBeRemoved == head){
+	    head = toBeRemoved.next;
+	}
+	else if (toBeRemoved == tail){
+	    tail = toBeRemoved.prev;
+	}
+	remove(toBeRemoved);
+	return val;
+    }
     public boolean add(int val){
-	LNode newOne = new LNode(val, head, null);
-	size++;
-       	head.prev = newOne;
-	head = newOne;
-	return true;
+	if (size != 0){
+	    LNode newOne = new LNode(val, null, tail);	    
+	    tail.next = newOne;
+	    tail = newOne;
+	    size++;
+	    return true;
+	}
+	else{
+	    LNode newOne = new LNode(val);
+	    tail = newOne;
+	    head = newOne;
+	    size++;
+	    return true;
+	}
     }
     
     public int get(int index){
-	/**if (index < 0 || index >= this.size()){    
-	    throw new IndexOutOfBoundsException();
-	    }*/
 	return getNode(index).value;
     }
     public int set(int index, int newValue){
-	/**if (index < 0 || index >= this.size()){    
-	    throw new IndexOutOfBoundsException();
-	    }*/
 	int temp = getNode(index).value;
 	getNode(index).value = newValue;
 	return temp;
@@ -116,74 +167,45 @@ public int next()*/
 	return -1;
     }
     public void add (int index, int value){
-	LNode toBeAdded = new LNode(value, getNode(index), getNode(index - 1));
-	LNode forward = getNode(index);
+	LNode toBeAdded;
 	if (index == 0){
-	    //toBeAdded.next = forward;
-	    forward.prev = toBeAdded;
-	    LNode head = toBeAdded;
+	    toBeAdded = new LNode(value, head, null);
+	    head.prev = toBeAdded;
+	    head = toBeAdded;
+	    size++;
+	}
+	else if (index == size()){
+	    toBeAdded = new LNode(value);
+	    toBeAdded.prev = getNode(index - 1);
+	    tail = toBeAdded;
+	    addAfter(getNode(index - 1), toBeAdded);
 	}
 	else{
-	    LNode aftward = getNode(index - 1);
-	    //toBeAdded.next = forward;
-	    //toBeAdded.prev = aftward;
-	    aftward.next = toBeAdded;
-	    forward.prev = toBeAdded;
+	    toBeAdded = new LNode (value, getNode(index), getNode(index - 1));
+	    addAfter(getNode(index - 1), toBeAdded);
 	}
-	size++;
     }
 
-
-
-    //private void addAfter(//int index???, LNode toBeAdded){//(LNode location, LNode toBeAdded){
-
-    //public void add(int index, int value){
-	
-    /**public void add(int index, int value){
-	if (index < 0 || index >= this.size()){    
-	    throw new IndexOutOfBoundsException();
-	}
-	LNode current = head;
-	if (index == 0){
-	    LNode toBeAdded = new LNode(value, current);
-	}
-	if (index == size - 1){
-	    LNode toBeAdded = new LNode(value);
-	    for (int i = 0; i < this.size(); i++){
-		if (i == index){
-		    current.value = value;
-		return;
-	    }
-	    current = current.next;
-	}
-	for (int i = 0; i < this.size(); i++){
-	    if (i == index){
-		current.value = value;
-		return;
-	    }
-	    current = current.next;
-	}
-	}*/
-    public String printList(){
-	String sum = "[";	
+	 
+    private String printList(){
+	String sum = "[";
 	if (this.size() == 0){
 	    sum += "P: null, 0: null, N: null]";
 	}
 	else{
 	    LNode current = head;
 	    for (int i = 0; i < size; i++){
-		//System.out.println(current.prev);		
-		if (i == 0){
-		    sum += "P: " + null + "; " + i + ": " + current.value + "; N: " + current.next.value + "\n";
-		    System.out.println("0 done");
+		if (current.prev == null && current.next == null){
+		    sum += "P: " + null + "; " + i + ": " + current.value + "; N: " + null +  "\n";
 		}
-		else if (i == size - 1){
+		else if (current.prev == null){
+		    sum += "P: " + null + "; " + i + ": " + current.value + "; N: " + current.next.value + "\n";
+		}
+		else if (current.next == null){
 		    sum += "P: " + current.prev.value + "; " + i + ": " + current.value + "; N: " + null + "\n";
-		    System.out.println("last done");
 		}
 		else{
 		    sum += "P: " + current.prev.value + "; " + i + ": " + current.value + "; N: " + current.next.value + "\n";
-		    System.out.println(i + " done");
 		}
 		current = current.next;
 	    }
@@ -207,72 +229,10 @@ public int next()*/
 	sum += "]";
 	return sum;
     }
-
+    public Iterator<Integer> iterator() {
+	return new LLIterator(this);
+    }
+    
     public static void main(String[]args){
-	System.out.println("MAIN");
-	MyLinkedList idk = new MyLinkedList();
-	System.out.println("basics");
-	System.out.println(idk.add(7));
-	System.out.println(idk.add(6));
-	System.out.println(idk.add(8));
-	System.out.println(idk.add(11));
-	System.out.println(idk.add(14));
-	//System.out.println(idk.toString());
-	System.out.println(idk.printList());
-	System.out.println(idk.size());
-	//System.out.println(idk.set(5, 23));
-	//System.out.println(idk.get(-1));
-	//System.out.println(idk.size());
-	//System.out.println(idk.toString());
-	//System.out.println("size: " + idk.size());
-	//System.out.println(idk.set(0, 4));
-	//System.out.println("index: " + idk.indexOf(0));
-	//System.out.println(idk.indexOf(11));
-	//System.out.println(idk.indexOf(4));
-	//System.out.println(idk.set(1, 4));
-	//System.out.println(idk.indexOf(11));
-	//System.out.println(idk.indexOf(4));
-	//idk.add(2, 14343);
-	//System.out.println(idk.getNode(-1).value);
-	//LNode q = new LNode (null, 54, null);
-	//LNode q = idk.new LNode (54, null, null);
-        //idk.addAfter(idk.getNode(1),q);
-	//System.out.println(idk.printList());
-	//System.out.println(idk.size());
-	//idk.remove(q);
-	idk.add(0, 476);
-	System.out.println(idk.printList());
-	System.out.println(idk.size());
-	/**idk.add(2, 5049);
-	System.out.println(idk.printList());
-	System.out.println(idk.size());
-	idk.add(idk.size() - 1, 324);
-	System.out.println(idk.printList());
-	System.out.println(idk.size());*/
-	//System.out.println(idk.toString());
-	System.out.println("\n \n \n");
-	
-       	System.out.println("EMP");
-	MyLinkedList emp = new MyLinkedList();
-	System.out.println(emp.size());
-	//System.out.println(emp.toString());
-	System.out.println(emp.printList());
-	LNode q = idk.new LNode (54, null, null);
-	//emp.addAfter(emp.getNode(0),q);
-	//System.out.println(idk.printList());
-	//System.out.println(idk.size());
-	//emp.remove(q);
-	//System.out.println(emp.getNode(-1));
-	//System.out.println(emp.indexOf(1));
-	//System.out.println(emp.indexOf(0));
-	//	System.out.println(emp.get(-1));
-	//System.out.println(emp.get(-1));
-	//System.out.println(emp.add(4));
-	//System.out.println(emp.get(0));
-	//System.out.println(emp.size());
-	//System.out.println(emp.toString());
-	//System.out.println(emp.set(-1, 4));
-	System.out.println(emp.printList());
-	System.out.println(emp.size());
     }
 }

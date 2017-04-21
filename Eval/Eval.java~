@@ -1,0 +1,22 @@
+public class Eval{
+    public static double apply(String op, String a, String b){
+	if (op.equals("+")){
+	    return Double.parseDouble(a) + Double.parseDouble(b);
+	}
+	else if (op.equals("-")){
+	    return Double.parseDouble(a) - Double.parseDouble(b);
+	}
+	else if (op.equals("*")){
+	    return Double.parseDouble(a) * Double.parseDouble(b);
+	}
+	else if (op.equals("/")){
+	    return Double.parseDouble(a) / Double.parseDouble(b);
+	}
+	else if (op.equals("%")){
+	    return Double.parseDouble(a) % Double.parseDouble(b);
+	}
+    }
+    public static void main (String[]args){
+	System.out.println(apply("+", "4", "5"));
+    }
+}

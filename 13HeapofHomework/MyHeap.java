@@ -16,6 +16,7 @@ public class MyHeap{
 	heap = new ArrayList<String>();
 	heap.add(null);
     }
+    
     public String rChild(){
 	return heap.get(2 * heap.indexOf(this) + 1);
     }
@@ -29,7 +30,7 @@ public class MyHeap{
 	public String remove()
 	public String peek()*/
     private void pushUp(){//there are this problems
-	if (this.compareTo(this.parent()) * cons > 0){
+	if (thi.compareTo(this.parent()) * cons > 0){
 	    int thisInd = heap.indexOf(this);
 	    int parInd = heap.indexOf(this.parent());
 	    heap.set(thisInd, this.parent());

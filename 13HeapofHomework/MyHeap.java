@@ -51,6 +51,36 @@ public class MyHeap{
 	}
     }
     private void pushDown(int pos){
+	/**if (lChild(pos).compareTo(pile.get(pos)) * cons < 0){
+	    pushUp(pile.indexOf(rChild(pos)));
+	    pushUp(pile.indexOf(lChild(pos)));
+	}
+	if (rChild(pos).compareTo(pile.get(pos)) * cons < 0){*/
+	//for (int i = 0; i < pile.size(); i++){
+	    pushUp(pile.indexOf(lChild(pos)));
+	    pushUp(pile.indexOf(rChild(pos)));
+	    //}
+	    //	}
+    
+	/**if (lChild(pos) == null || rChild(pos) == null){
+	    return;
+	}
+	if (lChild(pos).compareTo(rChild(pos)) * cons < 0){
+	    String child = lChild(pos);
+	    int childInd = pile.indexOf(lChild(pos));
+	    pile.set(pos, child);
+	    pushDown(childInd);
+	}
+	else if (lChild(pos).compareTo(rChild(pos)) * cons > 0){
+	    String child = rChild(pos);
+	    int childInd = pile.indexOf(rChild(pos));
+	    pile.set(pos, child);
+	    pushDown(childInd);
+	}
+	//pushDown(childInd);*/
+    }
+    /**
+    private void pushDown(int pos){
 	if (lChild(pos) == null){
 	    return;
 	}
@@ -65,10 +95,12 @@ public class MyHeap{
 	    pile.set(pos, child);
 	    pushUp(childInd);
 	}
-    }
+	}*/
     public void remove(){
 	pile.remove(1);
-	//pushDown(
+	pushDown(1);
+	
+    }
 
     public void add(String s){
 	pile.add(s);
@@ -129,6 +161,8 @@ public class MyHeap{
 	System.out.println(h.lChild(7));
 
 	//	System.out.println(h.parent(1));
+	System.out.println(h.toString());
+	h.remove();
 	System.out.println(h.toString());
     }
 }

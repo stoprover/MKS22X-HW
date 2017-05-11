@@ -51,8 +51,11 @@ public class MyHeap{
 	}
     }
     private void pushDown(int pos){
+
+    /**private void pushDown(int pos){
 	System.out.println("lchild: " + lChild(pos));
 	System.out.println("rchild: " + rChild(pos));
+
 	System.out.println("c".compareTo("d"));
 	if (lChild(pos) == null && rChild(pos) == null){
 	    return;

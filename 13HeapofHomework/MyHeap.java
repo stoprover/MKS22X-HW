@@ -51,14 +51,42 @@ public class MyHeap{
 	}
     }
     private void pushDown(int pos){
+	System.out.println("lchild: " + lChild(pos));
+	System.out.println("rchild: " + rChild(pos));
+	System.out.println("c".compareTo("d"));
+	if (lChild(pos) == null && rChild(pos) == null){
+	    return;
+	}
+	else if (pile.get(pos).compareTo(lChild(pos)) * cons < 0 && pile.get(pos).compareTo(rChild(pos)) * cons < 0){
+	    return;
+	}
+	if (lChild(pos).compareTo(rChild(pos)) * cons <= 0){//pile.get(pos).compareTo(lChild(pos)) * cons > 0){
+	    System.out.println("LChild < rChild");
+	    String examined = pile.get(pos);
+	    String child = lChild(pos);
+	    int childInd = pile.indexOf(child);
+	    pile.set(childInd, examined);
+	    pile.set(pos, child);
+	    pushDown(childInd);
+	}
+	else if (rChild(pos).compareTo(lChild(pos)) * cons > 0){//(pile.get(pos).compareTo(rChild(pos)) * cons > 0){
+	    System.out.println("rChild < lChild");
+	    String examined = pile.get(pos);
+	    String child = rChild(pos);
+	    int childInd = pile.indexOf(child);
+	    pile.set(childInd, examined);
+	    pile.set(pos, child);
+	    pushDown(childInd);
+	}
+    }
 	/**if (lChild(pos).compareTo(pile.get(pos)) * cons < 0){
 	    pushUp(pile.indexOf(rChild(pos)));
 	    pushUp(pile.indexOf(lChild(pos)));
 	}
 	if (rChild(pos).compareTo(pile.get(pos)) * cons < 0){*/
 	//for (int i = 0; i < pile.size(); i++){
-	    pushUp(pile.indexOf(lChild(pos)));
-	    pushUp(pile.indexOf(rChild(pos)));
+	// pushUp(pile.indexOf(lChild(pos)));
+	//   pushUp(pile.indexOf(rChild(pos)));
 	    //}
 	    //	}
     
@@ -78,7 +106,7 @@ public class MyHeap{
 	    pushDown(childInd);
 	}
 	//pushDown(childInd);*/
-    }
+    
     /**
     private void pushDown(int pos){
 	if (lChild(pos) == null){
@@ -97,9 +125,10 @@ public class MyHeap{
 	}
 	}*/
     public void remove(){
-	pile.remove(1);
+	String child = pile.get(pile.size() - 1);
+	pile.set(1, child);
+	pile.remove(pile.size() - 1);
 	pushDown(1);
-	
     }
 
     public void add(String s){

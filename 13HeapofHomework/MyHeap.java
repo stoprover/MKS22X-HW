@@ -51,82 +51,56 @@ public class MyHeap{
 	}
     }
     private void pushDown(int pos){
-
-    /**private void pushDown(int pos){
-	System.out.println("lchild: " + lChild(pos));
-	System.out.println("rchild: " + rChild(pos));
-
-	System.out.println("c".compareTo("d"));
-	if (lChild(pos) == null && rChild(pos) == null){
-	    return;
-	}
-	else if (pile.get(pos).compareTo(lChild(pos)) * cons < 0 && pile.get(pos).compareTo(rChild(pos)) * cons < 0){
-	    return;
-	}
-	if (lChild(pos).compareTo(rChild(pos)) * cons <= 0){//pile.get(pos).compareTo(lChild(pos)) * cons > 0){
-	    System.out.println("LChild < rChild");
-	    String examined = pile.get(pos);
-	    String child = lChild(pos);
-	    int childInd = pile.indexOf(child);
-	    pile.set(childInd, examined);
-	    pile.set(pos, child);
-	    pushDown(childInd);
-	}
-	else if (rChild(pos).compareTo(lChild(pos)) * cons > 0){//(pile.get(pos).compareTo(rChild(pos)) * cons > 0){
-	    System.out.println("rChild < lChild");
-	    String examined = pile.get(pos);
-	    String child = rChild(pos);
-	    int childInd = pile.indexOf(child);
-	    pile.set(childInd, examined);
-	    pile.set(pos, child);
-	    pushDown(childInd);
+	if (lChild(pos) != null && rChild(pos) != null){
+	    if (rChild(pos).compareTo(pile.get(pos)) * cons < 0 && rChild(pos).compareTo(lChild(pos)) * cons < 0){
+		String examined = pile.get(pos);
+		String child = rChild(pos);
+		int childInd = pile.indexOf(child);
+		pile.set(childInd, examined);
+		pile.set(pos, child);
+		pushDown(childInd);
+	    }
+	    else if (lChild(pos).compareTo(pile.get(pos)) * cons < 0 && lChild(pos).compareTo(rChild(pos)) * cons < 0){//PILE.GET(POS) && LCHILD(POS) > RCHILD(POS)){
+		String examined = pile.get(pos);
+		String child = lChild(pos);
+		int childInd = pile.indexOf(child);
+		pile.set(childInd, examined);
+		pile.set(pos, child);
+		pushDown(childInd);
+	    }
 	}
     }
-	/**if (lChild(pos).compareTo(pile.get(pos)) * cons < 0){
-	    pushUp(pile.indexOf(rChild(pos)));
-	    pushUp(pile.indexOf(lChild(pos)));
-	}
-	if (rChild(pos).compareTo(pile.get(pos)) * cons < 0){*/
-	//for (int i = 0; i < pile.size(); i++){
-	// pushUp(pile.indexOf(lChild(pos)));
-	//   pushUp(pile.indexOf(rChild(pos)));
-	    //}
-	    //	}
-    
-	/**if (lChild(pos) == null || rChild(pos) == null){
-	    return;
-	}
-	if (lChild(pos).compareTo(rChild(pos)) * cons < 0){
-	    String child = lChild(pos);
-	    int childInd = pile.indexOf(lChild(pos));
-	    pile.set(pos, child);
-	    pushDown(childInd);
-	}
-	else if (lChild(pos).compareTo(rChild(pos)) * cons > 0){
-	    String child = rChild(pos);
-	    int childInd = pile.indexOf(rChild(pos));
-	    pile.set(pos, child);
-	    pushDown(childInd);
-	}
-	//pushDown(childInd);*/
-    
-    /**
-    private void pushDown(int pos){
+	/**System.out.println("lChild: " + lChild(pos));
+	System.out.println("rChild: " + rChild(pos));
+	System.out.println("lChild < rChild: " + (lChild(pos).compareTo(rChild(pos)) * cons < 0));
 	if (lChild(pos) == null){
 	    return;
 	}
-	else if (pile.get(pos).compareTo(lChild(pos)) * cons < 0){
+	if (pile.get(pos).compareTo(parent(pos)) * cons > 0 && pile.get(pos).compareTo(lChild(pos)) * cons < 0 && pile.get(pos).compareTo(rChild(pos)) * cons < 0){
 	    return;
 	}
-	if (pile.get(pos).compareTo(lChild(pos)) * cons > 0){
-	    String child = lChild(pos);
+	if (lChild(pos).compareTo(rChild(pos)) * cons >= 0){
+	    System.out.println("yes");
 	    String examined = pile.get(pos);
-	    int childInd = pile.indexOf(lChild(pos));
+	    String child = rChild(pos);
+	    int childInd = pile.indexOf(child);
 	    pile.set(childInd, examined);
 	    pile.set(pos, child);
-	    pushUp(childInd);
+	    pushDown(childInd);
+	}
+	if (lChild(pos).compareTo(rChild(pos)) * cons < 0){
+	    System.out.println("no");
+	    String examined = pile.get(pos);
+	    String child = lChild(pos);
+	    int childInd = pile.indexOf(child);
+	    pile.set(childInd, examined);
+	    pile.set(pos, child);
+	    pushDown(childInd);
 	}
 	}*/
+
+
+
     public void remove(){
 	String child = pile.get(pile.size() - 1);
 	pile.set(1, child);
@@ -195,6 +169,7 @@ public class MyHeap{
 	//	System.out.println(h.parent(1));
 	System.out.println(h.toString());
 	h.remove();
+	//	h.remove();
 	System.out.println(h.toString());
     }
 }

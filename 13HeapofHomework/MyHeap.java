@@ -52,14 +52,16 @@ public class MyHeap{
     }
     private void pushDown(int pos){
 	for (int i = 1; i < (pile.size() - 1) / 2; i++){
-	    if (lChild(i).compareTo(rChild(i)) == 0){
+	    /**if (lChild(i).compareTo(rChild(i)) == 0){
 		String examined = pile.get(i);
 		String child = lChild(i);
 		int childInd = 2 * i;
 		pile.set(i, child);
 		pile.set(childInd, examined);
-	    }
-	    else if (lChild(i).compareTo(rChild(i)) * cons <= 0 && pile.get(i).compareTo(lChild(i)) * cons >= 0){
+		}*/
+	    if (pile.size() == //2 to some power + 1 (aka one element on bottom level)
+		//compare last element to last two elements before it, stick up smallest of the three to both parents, see if possible to switch 
+	    if (lChild(i).compareTo(rChild(i)) * cons <= 0 && pile.get(i).compareTo(lChild(i)) * cons >= 0){
 		String examined = pile.get(i);
 		String child = lChild(i);
 		int childInd = 2 * i;
@@ -196,10 +198,46 @@ public class MyHeap{
 	System.out.println(h.toString());
        	h.remove();
 	h.remove();
-	h.remove();
-	h.remove();
-	h.remove();
-	h.remove();
+	System.out.println(h.toString());
+h.remove();
+	System.out.println(h.toString());
+h.remove();
+	System.out.println(h.toString());
+h.remove();
+	System.out.println(h.toString());
+h.remove();
+	System.out.println(h.toString());
+h.remove();
+	System.out.println(h.toString());
+h.remove();
+	System.out.println(h.toString());
+h.remove();
+	System.out.println(h.toString());
+h.remove();
+	System.out.println(h.toString());
+h.remove();
+	System.out.println(h.toString());
+h.remove();
+	System.out.println(h.toString());
+
+h.remove();
+	System.out.println(h.toString());
+h.remove();
+	System.out.println(h.toString());
+h.remove();
+	System.out.println(h.toString());
+h.remove();
+	System.out.println(h.toString());
+h.remove();
+	System.out.println(h.toString());
+h.remove();
+	System.out.println(h.toString());
+h.remove();
+	System.out.println(h.toString());
+h.remove();
+	System.out.println(h.toString());
+h.remove();
+	System.out.println(h.toString());
 	System.out.println(h.toString());
     }
 }

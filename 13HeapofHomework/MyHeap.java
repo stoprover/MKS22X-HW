@@ -51,7 +51,31 @@ public class MyHeap{
 	}
     }
     private void pushDown(int pos){
-	if (lChild(pos) != null && rChild(pos) != null){
+	for (int i = 1; i < (pile.size() - 1) / 2; i++){
+	    if (lChild(i).compareTo(rChild(i)) == 0){
+		String examined = pile.get(i);
+		String child = lChild(i);
+		int childInd = 2 * i;
+		pile.set(i, child);
+		pile.set(childInd, examined);
+	    }
+	    else if (lChild(i).compareTo(rChild(i)) * cons <= 0 && pile.get(i).compareTo(lChild(i)) * cons >= 0){
+		String examined = pile.get(i);
+		String child = lChild(i);
+		int childInd = 2 * i;
+		pile.set(i, child);
+		pile.set(childInd, examined);
+	    }
+	    else if (lChild(i).compareTo(rChild(i)) * cons > 0 && pile.get(i).compareTo(rChild(i)) * cons > 0){
+		String examined = pile.get(i);
+		String child = rChild(i);
+		int childInd = 2 * i + 1;
+		pile.set(i, child);
+		pile.set(childInd, examined);
+	    }
+	}
+    }
+	/**if (lChild(pos) != null && rChild(pos) != null){
 	    if (rChild(pos).compareTo(pile.get(pos)) * cons < 0 && rChild(pos).compareTo(lChild(pos)) * cons < 0){
 		String examined = pile.get(pos);
 		String child = rChild(pos);
@@ -169,7 +193,13 @@ public class MyHeap{
 	//	System.out.println(h.parent(1));
 	System.out.println(h.toString());
 	h.remove();
-	//	h.remove();
+	System.out.println(h.toString());
+       	h.remove();
+	h.remove();
+	h.remove();
+	h.remove();
+	h.remove();
+	h.remove();
 	System.out.println(h.toString());
     }
 }

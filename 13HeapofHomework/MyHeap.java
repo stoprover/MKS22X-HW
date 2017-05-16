@@ -31,9 +31,6 @@ public class MyHeap{
 	return pile.get(pos / 2);
     }
     
-    /**public void add (String s)
-	public String remove()
-	public String peek()*/
     private void pushUp(int pos){
 	if (parent(pos) == null){
 	    return;
@@ -50,82 +47,44 @@ public class MyHeap{
 	    pushUp(parInd);
 	}
     }
+    public String peek(){
+	return pile.get(1);
+    }
     private void pushDown(int pos){
-	for (int i = 1; i < (pile.size() - 1) / 2; i++){
-	    /**if (lChild(i).compareTo(rChild(i)) == 0){
-		String examined = pile.get(i);
-		String child = lChild(i);
-		int childInd = 2 * i;
-		pile.set(i, child);
-		pile.set(childInd, examined);
-		}*/
-	    if (pile.size() == //2 to some power + 1 (aka one element on bottom level)
-		//compare last element to last two elements before it, stick up smallest of the three to both parents, see if possible to switch 
-	    if (lChild(i).compareTo(rChild(i)) * cons <= 0 && pile.get(i).compareTo(lChild(i)) * cons >= 0){
-		String examined = pile.get(i);
-		String child = lChild(i);
-		int childInd = 2 * i;
-		pile.set(i, child);
-		pile.set(childInd, examined);
-	    }
-	    else if (lChild(i).compareTo(rChild(i)) * cons > 0 && pile.get(i).compareTo(rChild(i)) * cons > 0){
-		String examined = pile.get(i);
-		String child = rChild(i);
-		int childInd = 2 * i + 1;
-		pile.set(i, child);
-		pile.set(childInd, examined);
-	    }
-	}
-    }
-	/**if (lChild(pos) != null && rChild(pos) != null){
-	    if (rChild(pos).compareTo(pile.get(pos)) * cons < 0 && rChild(pos).compareTo(lChild(pos)) * cons < 0){
-		String examined = pile.get(pos);
-		String child = rChild(pos);
-		int childInd = pile.indexOf(child);
-		pile.set(childInd, examined);
-		pile.set(pos, child);
-		pushDown(childInd);
-	    }
-	    else if (lChild(pos).compareTo(pile.get(pos)) * cons < 0 && lChild(pos).compareTo(rChild(pos)) * cons < 0){//PILE.GET(POS) && LCHILD(POS) > RCHILD(POS)){
-		String examined = pile.get(pos);
-		String child = lChild(pos);
-		int childInd = pile.indexOf(child);
-		pile.set(childInd, examined);
-		pile.set(pos, child);
-		pushDown(childInd);
+       	System.out.println("removed toString\n" + toString());
+	for (int i = 1; i < (pile.size()) / 2; i++){ //(pile.size() - 1) / 2; i++){
+	    System.out.println("I IS: " + i);		
+	    if (pile.get(i).compareTo(lChild(i)) * cons > 0 || pile.get(i).compareTo(rChild(i)) * cons > 0 ){
+		System.out.println("i= " + i + "; lChild > i or rChild > i");
+		if (lChild(i).compareTo(rChild(i)) * cons <= 0){
+		    System.out.println("lChild < rChild");
+		    String examined = pile.get(i);
+		    System.out.println("examined: " + examined);
+		    String child = lChild(i);
+		    System.out.println("child: " + child);
+		    int childInd = 2 * i;
+		    System.out.println("childInd: " + childInd);
+		    pile.set(i, child);
+		    pile.set(childInd, examined);
+		    i = childInd - 1;
+		    System.out.println("current toString: \n" + toString());
+		}
+		else{
+		    System.out.println("rChild < lChild");
+		    String examined = pile.get(i);
+		    System.out.println("examined: " + examined);
+		    String child = rChild(i);
+		    System.out.println("child: " + child);
+		    int childInd = 2 * i + 1;
+		    System.out.println("childInd: " + childInd);
+		    pile.set(i, child);
+		    pile.set(childInd, examined);
+		    i = childInd = 1;
+		    System.out.println("current toString: \n" + toString());
+		}
 	    }
 	}
     }
-	/**System.out.println("lChild: " + lChild(pos));
-	System.out.println("rChild: " + rChild(pos));
-	System.out.println("lChild < rChild: " + (lChild(pos).compareTo(rChild(pos)) * cons < 0));
-	if (lChild(pos) == null){
-	    return;
-	}
-	if (pile.get(pos).compareTo(parent(pos)) * cons > 0 && pile.get(pos).compareTo(lChild(pos)) * cons < 0 && pile.get(pos).compareTo(rChild(pos)) * cons < 0){
-	    return;
-	}
-	if (lChild(pos).compareTo(rChild(pos)) * cons >= 0){
-	    System.out.println("yes");
-	    String examined = pile.get(pos);
-	    String child = rChild(pos);
-	    int childInd = pile.indexOf(child);
-	    pile.set(childInd, examined);
-	    pile.set(pos, child);
-	    pushDown(childInd);
-	}
-	if (lChild(pos).compareTo(rChild(pos)) * cons < 0){
-	    System.out.println("no");
-	    String examined = pile.get(pos);
-	    String child = lChild(pos);
-	    int childInd = pile.indexOf(child);
-	    pile.set(childInd, examined);
-	    pile.set(pos, child);
-	    pushDown(childInd);
-	}
-	}*/
-
-
 
     public void remove(){
 	String child = pile.get(pile.size() - 1);
@@ -151,7 +110,19 @@ public class MyHeap{
     }
     public static void main(String[]args){
 	MyHeap h = new MyHeap();
-	h.add("n");
+       	h.add("r");
+	h.add("r");
+	h.add("r");
+	h.add("s");
+	h.add("s");
+	h.add("u");
+	h.add("w");
+	h.add("v");
+	h.add("x");
+	//h.add("v");
+	System.out.println(h.toString());
+	h.remove();
+	/**h.add("n");
        	h.add("j");
 	h.add("p");
 	h.add("x");
@@ -188,7 +159,7 @@ public class MyHeap{
 	h.add("potato");
 	h.add("apple");
 	h.add("orange");*/
-	System.out.println(h.parent(7));
+	/**System.out.println(h.parent(7));
 	System.out.println(h.rChild(7));
 	System.out.println(h.lChild(7));
 
@@ -237,7 +208,8 @@ h.remove();
 h.remove();
 	System.out.println(h.toString());
 h.remove();
+System.out.println(h.toString());*/
 	System.out.println(h.toString());
-	System.out.println(h.toString());
+	System.out.println(h.peek());
     }
 }

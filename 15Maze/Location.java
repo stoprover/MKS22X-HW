@@ -26,12 +26,27 @@ public class Location implements Comparable<Location>{
     public Location getPrevious(){
 	return previous;
     }
-    public int getAStar(){
+    public boolean getAStar(){
 	return aStar;
     }
     public int compareTo(Location other){
-	if (getAStar()){
-	    if (this.getToGoal() == other.getToGoal() && this.getToStart() == other.getToStart()){
-		return 0;
+	if (this.getAStar() && other.getAStar()){
+	    int thisData = this.getToGoal() + this.getToStart();
+	    int otherData = other.getToGoal() + other.getToStart();
+	    if (thisData > otherData){
+		return 1;
 	    }
-	    //number that is sum of one' toGoal and toStart
+	    else if (thisData < otherData){
+		return -1;
+	    }
+	    return 0;
+	}
+	if (this.getToGoal() > other.getToGoal()){
+	    return 1;
+	}
+	else if (this.getToGoal() < other.getToGoal()){
+	    return -1;
+	}
+	return 0;
+    }
+}

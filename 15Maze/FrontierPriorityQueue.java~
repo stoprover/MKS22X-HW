@@ -1,0 +1,18 @@
+import java.util.*;
+public class FrontierPriorityQueue implements Frontier{
+    private PriorityQueue<Location> locations;
+    public FrontierPriorityQueue(){
+	locations = new PriorityQueue<Locations>();
+    }
+    public void add(Location l){
+	locations.add(l);
+    }
+    public Location next(){
+	return locations.poll();
+    }
+    public static void main(String[]args){
+	Location l = new Location (5, 4, null, 3, 5);
+	FrontierPriorityQueue q = new FrontierPriorityQueue();
+	q.add(l);
+	System.out.println(q.next().getRow());
+    }

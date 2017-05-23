@@ -10,10 +10,4 @@ public class QueueFrontier implements Frontier{
     public Location next(){
 	return locations.remove();
     }
-    public static void main(String[]args){
-	Location l = new Location (5, 4, null, 3, 5);
-	QueueFrontier q = new QueueFrontier();
-	q.add(l);
-	System.out.println(q.next().getAStar());
-    }
 }

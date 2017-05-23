@@ -1,52 +1,80 @@
-private class Location implements Comparable<Location>{
-    private int row, col;
-    private int distToGoal, distToStart;
-    private Location previous;
-    private boolean aStar;
-    public Location(int r, int c, Location prev, int toStart, int toGoal, boolean star){
-	row = r;
-	col = c;
-	previous = prev;
-	distToGoal = toGoal;
-	distToStart = toStart;
-	aStar = star;
+import java.util.*;
+public class MazeSolver{
+    private Maze board;
+    private boolean animate;
+    public MazeSolver(String filename){
+	this(filename, false);
     }
-    public int getRow(){
-	return row;
+    public MazeSolver(String filename, boolean anim){
+	board = new Maze(filename);
+	animate = anim;
     }
-    public int getCol(){
-	return col;
-    }
-    public int getToGoal(){
-	return distToGoal;
-    }
-    public int getToStart(){
-	return distToStart;
-    }
-    public Location getPrevious(){
-	return previous;
-    }
-    public boolean getAStar(){
-	return aStar;
-    }
-    public int compareTo(Location other){
-	if (this.getAStar() && other.getAStar()){
-	    int thisData = this.getToGoal() + this.getToStart();
-	    int otherData = other.getToGoal() + other.getToStart();
-	    if (thisData > otherData){
-		return 1;
+    //public void solve(){
+    public void solve(int type){
+	//0: depth-first search- stack
+	//1: breadth-first search- queue
+	//2: best-first search- priority
+	//3: a*- priority
+	if (type == 0){
+	    StackFrontier rest = new StackFrontier();
+	}
+	else if (type == 1){
+	    QueueFrontier rest = new QueueFrontier();
+	}
+	else if (type == 2){
+	    FrontierPriorityQueue rest = new FrontierPriorityQueue();
+	}
+	else if (type == 3){
+	    FrontierPriorityQueue rest = new FrontierPriorityQueue();
+	}
+	else{
+	    throw new IllegalArgumentException();
+	}
+	rest.add(board.getStart());
+	//int i = 1;
+	while(rest.size() > 0){
+	    Location current = rest.next();
+	    board.set(current.getRow(), current.getCol(), '.');
+	    if (board.get(current.getRow(), current.getCol()) == 'E'){
+		while(current.getPrevious() != null){
+		   
+		    board.set(current.getRow(), current.getCol(), '@');
+		    current = current.getPrevious();
+		}
+		//trace stuff, but that's work		
+		return;
 	    }
-	    else if (thisData < otherData){
-		return -1;
+	    for (Location l : getNeighbors(current)){
+		rest.add(l);
 	    }
-	    return 0;
 	}
-	if (this.getToGoal() > other.getToGoal()){
-	    return 1;
-	}
-	else if (this.getToGoal() < other.getToGoal()){
-	    return -1;
-	}
-	return 0;
     }
-}
+    public static ArrayList<Location> getNeighbors(Location n){
+	ArrayList<Location> friends = new ArrayList<Location>();
+	int row = n.getRow();
+	int col = n.getCol(); 
+	if (board.get(row - 1, col) == ' '){
+	    board.set(row - 1, col, '?');
+	    friends.add(new Location(row - 1, col, n, 88, 88)); //does it matter what order they're added in, and does dist to start/end matter?
+	}
+	if (board.get(row + 1, col) == ' '){
+	    board.set(row + 1, col, '?');
+	    friends.add(new Location(row - 1, col, n, 88, 88));
+	}
+	if (board.get(row, col - 1) == ' '){
+	    board.set(row, col - 1, '?');
+	    friends.add(new Location(row - 1, col, n, 88, 88));
+	}
+	if (board.get(row, col + 1) == ' '){
+	    board.set(row, col + 1, '?');
+	    friends.add(new Location(row - 1, col, n, 88, 88));
+	}
+	return friends;
+    }
+    public String toString(){
+        return board.toString();
+    }
+    public static void main(String[]args){
+
+
+	//public String toString()

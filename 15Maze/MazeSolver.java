@@ -1,4 +1,5 @@
 import java.util.*;
+import java.lang.*;
 public class MazeSolver{
     private Maze board;
     private boolean animate;
@@ -15,27 +16,26 @@ public class MazeSolver{
 	//1: breadth-first search- queue
 	//2: best-first search- priority
 	//3: a*- priority
+	Frontier rest;
 	if (type == 0){
-	    StackFrontier rest = new StackFrontier();
+	    rest = new StackFrontier();
 	}
 	else if (type == 1){
-	    QueueFrontier rest = new QueueFrontier();
+	    rest = new QueueFrontier();
 	}
 	else if (type == 2){
-	    FrontierPriorityQueue rest = new FrontierPriorityQueue();
-	}
-	else if (type == 3){
-	    FrontierPriorityQueue rest = new FrontierPriorityQueue();
+	    rest = new FrontierPriorityQueue();
 	}
 	else{
-	    throw new IllegalArgumentException();
+	    rest = new FrontierPriorityQueue();
 	}
 	rest.add(board.getStart());
 	//int i = 1;
 	while(rest.size() > 0){
 	    Location current = rest.next();
-	    board.set(current.getRow(), current.getCol(), '.');
-	    if (board.get(current.getRow(), current.getCol()) == 'E'){
+	    this.board.set(current.getRow(), current.getCol(), '.');//herererere
+	    if (this.board.get(current.getRow(), current.getCol()) == 'E'){
+		board.set(current.getRow(), current.getCol(), '@');
 		while(current.getPrevious() != null){
 		   
 		    board.set(current.getRow(), current.getCol(), '@');
@@ -44,30 +44,32 @@ public class MazeSolver{
 		//trace stuff, but that's work		
 		return;
 	    }
-	    for (Location l : getNeighbors(current)){
-		rest.add(l);
+	    for (int i = 0; i < current.getNeighbors().size(); i++){
+		rest.add(getNeighbors().get(i));
+		/**(Location l : current.getNeighbors()){
+		   rest.add(l);*/
 	    }
 	}
     }
-    public static ArrayList<Location> getNeighbors(Location n){
+    public ArrayList getNeighbors(Location current){
 	ArrayList<Location> friends = new ArrayList<Location>();
-	int row = n.getRow();
-	int col = n.getCol(); 
-	if (board.get(row - 1, col) == ' '){
-	    board.set(row - 1, col, '?');
-	    friends.add(new Location(row - 1, col, n, 88, 88)); //does it matter what order they're added in, and does dist to start/end matter?
+	int row = current.getRow();
+	int col = current.getCol(); 
+	if (this.board.get(row - 1, col) == ' '){
+	    this.board.set(row - 1, col, '?');
+	    friends.add(new Location(row - 1, col, current, current.getToStart() + 1, 88)); //does it matter what order they're added in, and does dist to start/end matter?
 	}
-	if (board.get(row + 1, col) == ' '){
-	    board.set(row + 1, col, '?');
-	    friends.add(new Location(row - 1, col, n, 88, 88));
+	if (this.board.get(row + 1, col) == ' '){
+	    this.board.set(row + 1, col, '?');
+	    friends.add(new Location(row + 1, col, current, current.getToStart() + 1, 88));
 	}
-	if (board.get(row, col - 1) == ' '){
-	    board.set(row, col - 1, '?');
-	    friends.add(new Location(row - 1, col, n, 88, 88));
+	if (this.board.get(row, col - 1) == ' '){
+	    this.board.set(row, col - 1, '?');
+	    friends.add(new Location(row, col - 1, current, current.getToStart() + 1, 88));
 	}
-	if (board.get(row, col + 1) == ' '){
-	    board.set(row, col + 1, '?');
-	    friends.add(new Location(row - 1, col, n, 88, 88));
+	if (this.board.get(row, col + 1) == ' '){
+	    this.board.set(row, col + 1, '?');
+	    friends.add(new Location(row, col + 1, current, current.getToStart() + 1, 88));
 	}
 	return friends;
     }
@@ -75,6 +77,10 @@ public class MazeSolver{
         return board.toString();
     }
     public static void main(String[]args){
-
+	MazeSolver m = new MazeSolver("AMaze.txt");
+	m.solve(0);
+	System.out.println(m.toString());
+    }
+}
 
 	//public String toString()

@@ -10,4 +10,7 @@ public class StackFrontier implements Frontier{
     public Location next(){
 	return locations.pop();
     }
+    public int size(){
+	return locations.size();
+    }
 }

@@ -10,4 +10,7 @@ public class FrontierPriorityQueue implements Frontier{
     public Location next(){
 	return locations.poll();
     }
+    public int size(){
+	return locations.size();
+    }
 }

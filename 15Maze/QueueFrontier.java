@@ -10,4 +10,7 @@ public class QueueFrontier implements Frontier{
     public Location next(){
 	return locations.remove();
     }
+    public int size(){
+	return locations.size();
+    }
 }

@@ -10,77 +10,225 @@ public class MazeSolver{
 	board = new Maze(filename);
 	animate = anim;
     }
-    //public void solve(){
     public void solve(int type){
 	//0: depth-first search- stack
 	//1: breadth-first search- queue
 	//2: best-first search- priority
 	//3: a*- priority
-	Frontier rest;
+	//Frontier rest;
 	if (type == 0){
-	    rest = new StackFrontier();
+	    solve0();
 	}
 	else if (type == 1){
-	    rest = new QueueFrontier();
+	    solve1();
+	}
+        else if (type == 2){
+	    solve2();
+	}
+	solve3();
+    }
+    /**	if (type == 3){
+	    FrontierPriorityQueue rest = new FrontierPriorityQueue();
+	}
+	   
+	
+	else if (type == 1){
+	    QueueFrontier rest = new QueueFrontier();
 	}
 	else if (type == 2){
-	    rest = new FrontierPriorityQueue();
+	    FrontierPriorityQueue rest = new FrontierPriorityQueue();
 	}
-	else{
-	    rest = new FrontierPriorityQueue();
-	}
-	rest.add(board.getStart());
-	//int i = 1;
+	//else{
+	//FrontierPriorityQueue rest = new FrontierPriorityQueue();
+	 StackFrontier rest = new StackFrontier();
+	   //}
+	 /**rest.add(board.getStart());
 	while(rest.size() > 0){
 	    Location current = rest.next();
-	    this.board.set(current.getRow(), current.getCol(), '.');//herererere
-	    if (this.board.get(current.getRow(), current.getCol()) == 'E'){
-		board.set(current.getRow(), current.getCol(), '@');
+	    int row = current.getRow();
+	    int col = current.getCol();
+	    int start = current.getToStart();
+	    int end = current.getToGoal();
+	    if (this.board.get(row, col) == 'E'){
+		System.out.println("found end!!!");
+		board.set(row, col, '@');
+		System.out.println("zdrastvuytye, mir!!!");
 		while(current.getPrevious() != null){
-		   
+		    board.set(current.getRow(), current.getCol(), '@');
+		    current = current.getPrevious();
+		}		
+		return;
+	    }
+	    //updating current's representation
+	    this.board.set(row, col, '.');
+	    //adding the neighbors into rest
+	    if (board.get(row + 1, col) == ' ' || board.get(row + 1, col) == 'E' ){
+		rest.add(new Location(row + 1, col, current, start + 1, end - 1));
+	    }
+	    if (board.get(row - 1, col) == ' ' || board.get(row - 1, col) == 'E' ){
+		rest.add(new Location(row - 1, col, current, start + 1, end - 1));
+	    }
+	    if (board.get(row, col + 1) == ' ' || board.get(row, col + 1) == 'E' ){
+		rest.add(new Location(row, col + 1, current, start + 1, end - 1));
+	    }
+	    if (board.get(row, col - 1) == ' ' || board.get(row, col - 1) == 'E' ){
+		rest.add(new Location(row, col - 1, current, start + 1, end - 1));
+	    }
+	    
+	    }*/
+    
+    private void solve0(){
+	StackFrontier rest = new StackFrontier();
+	rest.add(board.getStart());
+	while(rest.size() > 0){
+	    Location current = rest.next();
+	    int row = current.getRow();
+	    int col = current.getCol();
+	    int start = current.getToStart();
+	    int end = current.getToGoal();
+	    if (this.board.get(row, col) == 'E'){
+		System.out.println("found end!!!");
+		board.set(row, col, '@');
+		System.out.println("zdrastvuytye, mir!!!");
+		while(current.getPrevious() != null){
 		    board.set(current.getRow(), current.getCol(), '@');
 		    current = current.getPrevious();
 		}
-		//trace stuff, but that's work		
+		board.set(current.getRow(), current.getCol(), '@');
 		return;
 	    }
-	    for (int i = 0; i < current.getNeighbors().size(); i++){
-		rest.add(getNeighbors().get(i));
-		/**(Location l : current.getNeighbors()){
-		   rest.add(l);*/
+	    //updating current's representation
+	    this.board.set(row, col, '.');
+	    //adding the neighbors into rest
+	    if (board.get(row + 1, col) == ' ' || board.get(row + 1, col) == 'E' ){
+		rest.add(new Location(row + 1, col, current, start + 1, end - 1));
 	    }
+	    if (board.get(row - 1, col) == ' ' || board.get(row - 1, col) == 'E' ){
+		rest.add(new Location(row - 1, col, current, start + 1, end - 1));
+	    }
+	    if (board.get(row, col + 1) == ' ' || board.get(row, col + 1) == 'E' ){
+		rest.add(new Location(row, col + 1, current, start + 1, end - 1));
+	    }
+	    if (board.get(row, col - 1) == ' ' || board.get(row, col - 1) == 'E' ){
+		rest.add(new Location(row, col - 1, current, start + 1, end - 1));
+	    }	    
 	}
     }
-    public ArrayList getNeighbors(Location current){
-	ArrayList<Location> friends = new ArrayList<Location>();
-	int row = current.getRow();
-	int col = current.getCol(); 
-	if (this.board.get(row - 1, col) == ' '){
-	    this.board.set(row - 1, col, '?');
-	    friends.add(new Location(row - 1, col, current, current.getToStart() + 1, 88)); //does it matter what order they're added in, and does dist to start/end matter?
+    private void solve1(){
+	QueueFrontier rest = new QueueFrontier();
+	rest.add(board.getStart());
+	while(rest.size() > 0){
+	    Location current = rest.next();
+	    int row = current.getRow();
+	    int col = current.getCol();
+	    int start = current.getToStart();
+	    int end = current.getToGoal();
+	    if (this.board.get(row, col) == 'E'){
+		System.out.println("found end!!!");
+		board.set(row, col, '@');
+		System.out.println("zdrastvuytye, mir!!!");
+		while(current.getPrevious() != null){
+		    board.set(current.getRow(), current.getCol(), '@');
+		    current = current.getPrevious();
+		}
+		board.set(current.getRow(), current.getCol(), '@');
+		return;
+	    }
+	    //updating current's representation
+	    this.board.set(row, col, '.');
+	    //adding the neighbors into rest
+	    if (board.get(row + 1, col) == ' ' || board.get(row + 1, col) == 'E' ){
+		rest.add(new Location(row + 1, col, current, start + 1, end - 1));
+	    }
+	    if (board.get(row - 1, col) == ' ' || board.get(row - 1, col) == 'E' ){
+		rest.add(new Location(row - 1, col, current, start + 1, end - 1));
+	    }
+	    if (board.get(row, col + 1) == ' ' || board.get(row, col + 1) == 'E' ){
+		rest.add(new Location(row, col + 1, current, start + 1, end - 1));
+	    }
+	    if (board.get(row, col - 1) == ' ' || board.get(row, col - 1) == 'E' ){
+		rest.add(new Location(row, col - 1, current, start + 1, end - 1));
+	    }	    
 	}
-	if (this.board.get(row + 1, col) == ' '){
-	    this.board.set(row + 1, col, '?');
-	    friends.add(new Location(row + 1, col, current, current.getToStart() + 1, 88));
+    }
+    private void solve2(){
+	FrontierPriorityQueue rest = new FrontierPriorityQueue();
+	rest.add(board.getStart());
+	while(rest.size() > 0){
+	    Location current = rest.next();
+	    int row = current.getRow();
+	    int col = current.getCol();
+	    int start = current.getToStart();
+	    int end = current.getToGoal();
+	    if (this.board.get(row, col) == 'E'){
+		System.out.println("found end!!!");
+		board.set(row, col, '@');
+		System.out.println("zdrastvuytye, mir!!!");
+		while(current.getPrevious() != null){
+		    board.set(current.getRow(), current.getCol(), '@');
+		    current = current.getPrevious();
+		}
+		board.set(current.getRow(), current.getCol(), '@');
+		return;
+	    }
+	    //updating current's representation
+	    this.board.set(row, col, '.');
+	    //adding the neighbors into rest
+	    if (board.get(row + 1, col) == ' ' || board.get(row + 1, col) == 'E' ){
+		rest.add(new Location(row + 1, col, current, start + 1, end - 1));
+	    }
+	    if (board.get(row - 1, col) == ' ' || board.get(row - 1, col) == 'E' ){
+		rest.add(new Location(row - 1, col, current, start + 1, end - 1));
+	    }
+	    if (board.get(row, col + 1) == ' ' || board.get(row, col + 1) == 'E' ){
+		rest.add(new Location(row, col + 1, current, start + 1, end - 1));
+	    }
+	    if (board.get(row, col - 1) == ' ' || board.get(row, col - 1) == 'E' ){
+		rest.add(new Location(row, col - 1, current, start + 1, end - 1));
+	    }	    
 	}
-	if (this.board.get(row, col - 1) == ' '){
-	    this.board.set(row, col - 1, '?');
-	    friends.add(new Location(row, col - 1, current, current.getToStart() + 1, 88));
+    }
+    private void solve3(){
+	FrontierPriorityQueue rest = new FrontierPriorityQueue();
+	rest.add(board.getStart());
+	while(rest.size() > 0){
+	    Location current = rest.next();
+	    int row = current.getRow();
+	    int col = current.getCol();
+	    int start = current.getToStart();
+	    int end = current.getToGoal();
+	    if (this.board.get(row, col) == 'E'){
+		System.out.println("found end!!!");
+		board.set(row, col, '@');
+		System.out.println("zdrastvuytye, mir!!!");
+		while(current.getPrevious() != null){
+		    board.set(current.getRow(), current.getCol(), '@');
+		    current = current.getPrevious();
+		}
+		board.set(current.getRow(), current.getCol(), '@');
+		return;
+	    }
+	    //updating current's representation
+	    this.board.set(row, col, '.');
+	    //adding the neighbors into rest
+	    if (board.get(row + 1, col) == ' ' || board.get(row + 1, col) == 'E' ){
+		rest.add(new Location(row + 1, col, current, start + 1, end - 1, true));
+	    }
+	    if (board.get(row - 1, col) == ' ' || board.get(row - 1, col) == 'E' ){
+		rest.add(new Location(row - 1, col, current, start + 1, end - 1, true));
+	    }
+	    if (board.get(row, col + 1) == ' ' || board.get(row, col + 1) == 'E' ){
+		rest.add(new Location(row, col + 1, current, start + 1, end - 1, true));
+	    }
+	    if (board.get(row, col - 1) == ' ' || board.get(row, col - 1) == 'E' ){
+		rest.add(new Location(row, col - 1, current, start + 1, end - 1, true));
+	    }
+	    //System.out.println(board.toString());
 	}
-	if (this.board.get(row, col + 1) == ' '){
-	    this.board.set(row, col + 1, '?');
-	    friends.add(new Location(row, col + 1, current, current.getToStart() + 1, 88));
-	}
-	return friends;
     }
     public String toString(){
-        return board.toString();
+        return board.toString(14);
     }
     public static void main(String[]args){
-	MazeSolver m = new MazeSolver("AMaze.txt");
-	m.solve(0);
-	System.out.println(m.toString());
     }
 }
-
-	//public String toString()

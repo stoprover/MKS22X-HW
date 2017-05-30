@@ -1,0 +1,78 @@
+public class RunningMedian{
+    MyHeap leftHeap;
+    MyHeap rightHeap;
+    public RunningMedian(){
+	leftHeap = new MyHeap(true);
+	rightHeap = new MyHeap(false);
+    }
+    public void add(int i){
+	if (i < leftHeap.peek()){
+	    leftHeap.add(i);
+	}
+	else if (i > rightHeap.peek()){
+	    rightHeap.add(i);
+	}
+	else{
+	    if (leftHeap.size() > rightHeap.size()){
+		rightHeap.add(i);
+	    }
+	    else{
+		leftHeap.add(i);
+	    }
+	}
+    }
+    public double getMedian(){
+	if (leftHeap.size() == rightHeap.size()){
+	    return (leftHeap.peek() + rightHeap.peek()) / 2;
+	}
+	else if (leftHeap.size() > rightHeap.size()){
+	    return leftHeap.peek();
+	}
+	return rightHeap.peak();
+    }
+    public static void main(String[]args){
+	RunningMedian r = new RunningMedian();
+	r.add(1);
+	System.out.println(leftHeap.printList());
+	r.add(1);
+	System.out.println(leftHeap.printList());
+	System.out.println(rightHeap.printList());
+	r.add(8);
+	System.out.println(leftHeap.printList());
+	System.out.println(rightHeap.printList());
+	r.add(4);
+	System.out.println(leftHeap.printList());
+	System.out.println(rightHeap.printList());
+	r.add(3);
+	System.out.println(leftHeap.printList());
+	System.out.println(rightHeap.printList());
+	r.add(1);
+	System.out.println(leftHeap.printList());
+	System.out.println(rightHeap.printList());
+	r.add(1);
+	System.out.println(leftHeap.printList());
+	System.out.println(rightHeap.printList());
+	r.add(3);
+	System.out.println(leftHeap.printList());
+	System.out.println(rightHeap.printList());
+	r.add(2);
+	System.out.println(leftHeap.printList());
+	System.out.println(rightHeap.printList());
+	r.add(3);
+	System.out.println(leftHeap.printList());
+	System.out.println(rightHeap.printList());
+	r.add(7);
+	System.out.println(leftHeap.printList());
+	System.out.println(rightHeap.printList());
+	r.add(4);
+	System.out.println(leftHeap.printList());
+	System.out.println(rightHeap.printList());
+	r.add(2);
+	System.out.println(leftHeap.printList());
+	System.out.println(rightHeap.printList());
+	r.add(8);
+	System.out.println(leftHeap.printList());
+	System.out.println(rightHeap.printList());
+	System.out.println(r.getMedian());
+    }
+}

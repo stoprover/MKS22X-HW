@@ -56,6 +56,9 @@ public class MyHeap{
     public int peek(){
 	return pile.get(1);
     }
+    public int size(){
+	return pile.size() - 1;
+    }
     private void pushDown(int pos){
 	int i = 1;
 	while (i * 2 <= pile.size() - 1){
@@ -112,7 +115,7 @@ public class MyHeap{
 	pile.add(s);
 	pushUp(pile.size() - 1);
     }
-    private String printList(){
+    public String printList(){
 	String sum = "";
 	for (int i = 1; i < pile.size(); i++){
 	    sum += i + ": " + pile.get(i) + " " + parent(i) + ", \n";

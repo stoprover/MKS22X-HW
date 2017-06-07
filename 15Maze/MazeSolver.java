@@ -27,55 +27,6 @@ public class MazeSolver{
 	}
 	solve3();
     }
-    /**	if (type == 3){
-	    FrontierPriorityQueue rest = new FrontierPriorityQueue();
-	}
-	   
-	
-	else if (type == 1){
-	    QueueFrontier rest = new QueueFrontier();
-	}
-	else if (type == 2){
-	    FrontierPriorityQueue rest = new FrontierPriorityQueue();
-	}
-	//else{
-	//FrontierPriorityQueue rest = new FrontierPriorityQueue();
-	 StackFrontier rest = new StackFrontier();
-	   //}
-	 /**rest.add(board.getStart());
-	while(rest.size() > 0){
-	    Location current = rest.next();
-	    int row = current.getRow();
-	    int col = current.getCol();
-	    int start = current.getToStart();
-	    int end = current.getToGoal();
-	    if (this.board.get(row, col) == 'E'){
-		System.out.println("found end!!!");
-		board.set(row, col, '@');
-		System.out.println("zdrastvuytye, mir!!!");
-		while(current.getPrevious() != null){
-		    board.set(current.getRow(), current.getCol(), '@');
-		    current = current.getPrevious();
-		}		
-		return;
-	    }
-	    //updating current's representation
-	    this.board.set(row, col, '.');
-	    //adding the neighbors into rest
-	    if (board.get(row + 1, col) == ' ' || board.get(row + 1, col) == 'E' ){
-		rest.add(new Location(row + 1, col, current, start + 1, end - 1));
-	    }
-	    if (board.get(row - 1, col) == ' ' || board.get(row - 1, col) == 'E' ){
-		rest.add(new Location(row - 1, col, current, start + 1, end - 1));
-	    }
-	    if (board.get(row, col + 1) == ' ' || board.get(row, col + 1) == 'E' ){
-		rest.add(new Location(row, col + 1, current, start + 1, end - 1));
-	    }
-	    if (board.get(row, col - 1) == ' ' || board.get(row, col - 1) == 'E' ){
-		rest.add(new Location(row, col - 1, current, start + 1, end - 1));
-	    }
-	    
-	    }*/
     
     private void solve0(){
 	StackFrontier rest = new StackFrontier();
@@ -87,9 +38,7 @@ public class MazeSolver{
 	    int start = current.getToStart();
 	    int end = current.getToGoal();
 	    if (this.board.get(row, col) == 'E'){
-		System.out.println("found end!!!");
 		board.set(row, col, '@');
-		System.out.println("zdrastvuytye, mir!!!");
 		while(current.getPrevious() != null){
 		    board.set(current.getRow(), current.getCol(), '@');
 		    current = current.getPrevious();
@@ -124,9 +73,7 @@ public class MazeSolver{
 	    int start = current.getToStart();
 	    int end = current.getToGoal();
 	    if (this.board.get(row, col) == 'E'){
-		System.out.println("found end!!!");
 		board.set(row, col, '@');
-		System.out.println("zdrastvuytye, mir!!!");
 		while(current.getPrevious() != null){
 		    board.set(current.getRow(), current.getCol(), '@');
 		    current = current.getPrevious();
@@ -161,9 +108,7 @@ public class MazeSolver{
 	    int start = current.getToStart();
 	    int end = current.getToGoal();
 	    if (this.board.get(row, col) == 'E'){
-		System.out.println("found end!!!");
 		board.set(row, col, '@');
-		System.out.println("zdrastvuytye, mir!!!");
 		while(current.getPrevious() != null){
 		    board.set(current.getRow(), current.getCol(), '@');
 		    current = current.getPrevious();
@@ -198,9 +143,7 @@ public class MazeSolver{
 	    int start = current.getToStart();
 	    int end = current.getToGoal();
 	    if (this.board.get(row, col) == 'E'){
-		System.out.println("found end!!!");
 		board.set(row, col, '@');
-		System.out.println("zdrastvuytye, mir!!!");
 		while(current.getPrevious() != null){
 		    board.set(current.getRow(), current.getCol(), '@');
 		    current = current.getPrevious();
@@ -223,11 +166,13 @@ public class MazeSolver{
 	    if (board.get(row, col - 1) == ' ' || board.get(row, col - 1) == 'E' ){
 		rest.add(new Location(row, col - 1, current, start + 1, end - 1, true));
 	    }
-	    //System.out.println(board.toString());
 	}
     }
     public String toString(){
-        return board.toString(14);
+        return board.toString();
+    }
+    public String toString(int amnt){
+	return board.toString(amnt);
     }
     public static void main(String[]args){
     }

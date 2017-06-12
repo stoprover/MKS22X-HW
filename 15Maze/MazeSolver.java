@@ -10,6 +10,9 @@ public class MazeSolver{
 	board = new Maze(filename);
 	animate = anim;
     }
+    public void solve(){
+	solve(1);
+    }
     public void solve(int type){
 	//0: depth-first search- stack
 	//1: breadth-first search- queue
